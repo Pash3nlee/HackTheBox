@@ -22,7 +22,7 @@
 * Trying to escape from docker, use git railway-console
 * Change password of gitlab's administration
 * Sign in with admin login and our new password
-* Find in_rsa in folder /.ssh
+* Find id_rsa in folder /.ssh
 * SSH coonect to the host and find user.txt
 * Find bin programm
 * Check it with radare2
