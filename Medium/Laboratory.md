@@ -37,6 +37,6 @@
 
 # Explotation#2
 
-# Privlege escalation
+# Privilege Escalation
 
 # Result and Resources
