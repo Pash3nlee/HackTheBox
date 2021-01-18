@@ -1,3 +1,3 @@
 # Introduction
 
-[!Laboratory](https://www.hackthebox.eu/storage/avatars/97b6b79de818229932e1d9d645b50f62_thumb.png](https://www.hackthebox.eu/home/machines/profile/298)
+[!Laboratory](https://1.bp.blogspot.com/-QMNR6LckGZA/X7p-gYNZYxI/AAAAAAAAGnU/P6yFx9-cXdcml-USeeaTRU4FsSCti-RTgCLcBGAsYHQ/s0/infocard.png](https://www.hackthebox.eu/home/machines/profile/298)
