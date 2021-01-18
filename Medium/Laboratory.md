@@ -31,8 +31,6 @@
 
 # Enumeration
 
-# Googling
-
 # Explotation#1
 
 # Explotation#2
