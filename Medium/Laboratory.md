@@ -229,7 +229,7 @@ production:
 Saving `secret_key_base`
 ```3231f54b33e0c1ce998113c083528460153b19542a70173b4458a21e845ffa33cc45ca7486fc8ebb6b2727cc02feea4c3adbe2cc7b65003510e4031e164137b3```
 
-Now for create exploit RCE we need to up docker with gitlab version 12.8.1.
+Now for create exploit RCE we need to up docker with gitlab version 12.8.1 in another virtual machine.
 
 `docker run --rm -d --hostname gitlab.vh -p 443:443 -p 80:80 -p 2222:22 --name gitlab gitlab/gitlab-ce:12.9.0-ce.0`
 
