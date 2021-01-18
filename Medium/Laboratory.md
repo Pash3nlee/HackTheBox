@@ -19,12 +19,12 @@
 * Configure it and create explotation of RCE
 * Upload reverse shell comand to web-server and run it
 * Connected to machine
-* Trying to escape from docker use git railway-console
-* Change password of administration git
+* Trying to escape from docker, use git railway-console
+* Change password of gitlab's administration
 * Sign in with admin login and our new password
 * Find in_rsa in folder /.ssh
 * SSH coonect to the host and find user.txt
 * Find bin programm
-* Check it with radare 2
-* And find way to use the path hijacking
+* Check it with radare2
+* Find way to use the path hijacking
 * Get root.txt
