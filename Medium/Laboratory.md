@@ -9,3 +9,8 @@
 | Difficulty Ratings| Medium   |
 | Release | 14 Nov 2020   |
 | IP | 10.10.10.216   |
+
+# Short retelling
+* Word1
+* Word2
+* Word3
