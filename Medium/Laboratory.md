@@ -9,7 +9,7 @@
 | Difficulty Ratings| Medium   |
 | Release | 14 Nov 2020   |
 | IP | 10.10.10.216   |
-
+| Owned | 16.01.2021 |
 # Short retelling
 * Using Nmap and find new subdomain
 * Register on this site and find version of service
