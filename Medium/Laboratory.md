@@ -28,3 +28,13 @@
 * Check it with radare2
 * Find way to use the path hijacking
 * Get root.txt
+
+# Enumeration
+
+# Googling
+
+# Explotation#1
+
+# Explotation#2
+
+# Privlege escalation
