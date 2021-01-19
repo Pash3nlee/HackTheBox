@@ -63,7 +63,7 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
 Lets add laboratory.htb to /etc/hosts and check site.
 
-![](https://i.ibb.co/2vh4wDQ/1.png)
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/1.jpg)
 
 ## Dirb
 
@@ -139,18 +139,16 @@ Its enough, because in results of nmap scan we can see info about subdomain too:
 Add git.laboratory.htb to /etc/hosts
 
 And we can see that **gitlab** is hosted on *git.laboratory.htb*.
-![](https://i.ibb.co/DMPnddF/2021-01-18-213555.png)
-
 
 # Explotation#1
 
 I guess we need to find CVE for this version of gitlab. But in *https://git.laboratory.htb/help* we dont see any info about verion of gitlab.
 Anyway, there is "register" and "sign in" form, lets try registered my self.
-![](https://i.ibb.co/BVPjhmf/2021-01-18-214356.png)
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/2.jpg)
 
 And logged in.
 Now version of gitlab is available tu us in *https://git.laboratory.htb/help*
-![](https://i.ibb.co/8sjHvCR/4.png)
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/3.jpg)
 
 Lets find some CVE for this version. And we got it.
 
@@ -164,11 +162,11 @@ First we will check LFI:
 * We need to create two projects. For example TEST1 and TEST2.
 * After we need to create *issue* in one of project.
 * Add screenshot in description of *issue*
-> ![](https://i.ibb.co/fGf33zq/2021-01-18-220558.png)
+> ![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/4.jpg)
 * After saving, edit description for issue like `![Screenshot_2021-01-11_10_04_37](/uploads/5b87a86991332598febe11dadd2855d7/../../../../../../../../../../../../../../../../etc/passwd)`. Submit issue.
 * And move issue to another project (TEST1).
 * We can read /etc/passwd
-> ![](https://i.ibb.co/vYKQqc8/2021-01-18-221227.png)
+> ![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/5.jpg)
 ```
 oot:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
@@ -274,7 +272,7 @@ And use `nc -nlvp 1234`
 
 We need install extensions *Cookie-Editor* in Mozilla fire fox. And login with "Remeber me".
 We wiil send a cookie payload to *remeber_user_token*
-![](https://i.ibb.co/KbJdbkx/2021-01-18-225644.png)
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/6.jpg)
 
 Starting payload...
 
