@@ -642,7 +642,7 @@ dexter@laboratory:~$ cat chmod
 /bin/bash
 ```
 
-Export the PAH to script directory
+Export the PATH to script directory
 ```
 dexter@laboratory:~$ pwd
 /home/dexter
