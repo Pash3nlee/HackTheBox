@@ -109,7 +109,7 @@ Next step will try to bruteforce subdomain.
 
 ```
 ┌──(root💀kali)-[/home/kali/HTB]
-└─# ffuf -w /home/kali/HTB/Laboratory/subdomains-top1million-110000.txt -u https://FUZZ.laboratory.htb/ -c
+└─# ffuf -w /home/kali/HTB/Laboratory/subdomains-top1million-110000.txt -u https://laboratory.htb/ -H "Host:FUZZ.laboratory.htb" -fw 426
 
         /'___\  /'___\           /'___\       
        /\ \__/ /\ \__/  __  __  /\ \__/       
@@ -122,20 +122,22 @@ Next step will try to bruteforce subdomain.
 ________________________________________________
 
  :: Method           : GET
- :: URL              : https://FUZZ.laboratory.htb/
+ :: URL              : https://laboratory.htb/
  :: Wordlist         : FUZZ: /home/kali/HTB/Laboratory/subdomains-top1million-110000.txt
+ :: Header           : Host: FUZZ.laboratory.htb
  :: Follow redirects : false
  :: Calibration      : false
  :: Timeout          : 10
  :: Threads          : 40
  :: Matcher          : Response status: 200,204,301,302,307,401,403
+ :: Filter           : Response words: 426
 ________________________________________________
 
 git                     [Status: 302, Size: 105, Words: 5, Lines: 1]
-[WARN] Caught keyboard interrupt (Ctrl-C)
+:: Progress: [114532/114532] :: Job [1/1] :: 256 req/sec :: Duration: [0:08:05] :: Errors: 0 ::
 ```
-My network adapter turned off by itself during brute-force. But we could find subdomain __git__.
-Its enough, because in results of nmap scan we can see info about subdomain too: *Subject Alternative Name: DNS:git.laboratory.htb*.
+We could find subdomain __git__.
+In results of nmap scan we can see info about subdomain too: *Subject Alternative Name: DNS:git.laboratory.htb*.
 Add git.laboratory.htb to /etc/hosts
 
 And we can see that **gitlab** is hosted on *git.laboratory.htb*.
