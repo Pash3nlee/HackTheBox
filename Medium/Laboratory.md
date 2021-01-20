@@ -300,7 +300,7 @@ git@git:~/gitlab-rails/working$
 Checking directories and nothing interesting
 
 To find way for Privilege Escalation we will use [LinPEAS Script](https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/tree/master/linPEAS).
-Go to /tmp and use `linpeas -a > /tmp/linpeas.txt`
+Go to /tmp and use `linpeas -a > linpeas.txt`
 After complete download this file to our host and reead with `less -r linpeas.txt`
 
 Analyzing the file we find out, that it is docker container
