@@ -440,7 +440,7 @@ And we see interesting SUID file
 Go to `/usr/local/bin/` and run it try ./docker-security and nothing.
 We need in reverse engineering.
 
-Will use tool [radare2](https://forum.reverse4you.org/t/radare-2/1113)
+We will use tool [radare2](https://forum.reverse4you.org/t/radare-2/1113)
 
 Download `docker-security` to our host and start reversing...
 
