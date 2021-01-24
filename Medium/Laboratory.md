@@ -145,7 +145,7 @@ And we can see that **gitlab** is hosted on *git.laboratory.htb*.
 # Explotation#1
 
 I guess we need to find CVE for this version of gitlab. But in *https://git.laboratory.htb/help* we dont see any info about verion of gitlab.
-Anyway, there is "register" and "sign in" form, lets try registered my self.
+Anyway, there is "register" and "sign in" form, lets try registered myself.
 ![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/2.jpg)
 
 And logged in.
