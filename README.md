@@ -8,8 +8,7 @@
 ## Machines
 
 1. [Laboratory (Easy)](https://github.com/Pash3nlee/HackTheBox/blob/main/Easy/Laboratory.md)
-  
-  *GitLab, CVE, Docker, Reverse Engineering, PATH hijacking*
+   >*GitLab, CVE, Docker, Reverse Engineering, PATH hijacking*
 2. [Ready (Medium)](https://github.com/Pash3nlee/HackTheBox/blob/main/Medium/Ready.md)
 
 
