@@ -1,1 +1,1 @@
-Here I will publicate writeups for active machines with difficulty raiting Medium
+![](https://workablehr.s3.amazonaws.com/uploads/account/logo/417523/logo)
