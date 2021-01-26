@@ -11,5 +11,4 @@
 2. [Ready (Medium)](https://github.com/Pash3nlee/HackTheBox/blob/main/Medium/Ready.md)
 
 
-
 ![](https://workablehr.s3.amazonaws.com/uploads/account/logo/417523/logo)
