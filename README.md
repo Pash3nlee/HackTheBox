@@ -4,7 +4,7 @@
 ###### since 10.01.2021
 
 ### I recently started trying machines on HackTheBox and I'm going to publicate here my progrees.
-![HackTheBox Profile](https://www.hackthebox.eu/home/users/profile/480331)
+[HackTheBox Profile](https://www.hackthebox.eu/home/users/profile/480331)
 
 ## Machines
 
