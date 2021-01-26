@@ -6,7 +6,7 @@
 | :------:| :------: |
 | Name | Ready   |
 | OS   | Linux  |
-| Difficulty Ratings| Medium   |
+| Difficulty Rating| Medium   |
 | Release | 12 Dec 2020   |
 | IP | 10.10.10.220   |
 | Owned | 24.01.2021 |
