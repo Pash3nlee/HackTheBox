@@ -6,7 +6,7 @@
 | :------:| :------: |
 | Name | Laboratory   |
 | OS   | Linux  |
-| Difficulty Ratings| Medium   |
+| Difficulty Ratings| Easy   |
 | Release | 14 Nov 2020   |
 | IP | 10.10.10.216   |
 | Owned | 16.01.2021 |
