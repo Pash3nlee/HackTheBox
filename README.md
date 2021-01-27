@@ -9,6 +9,6 @@
 ## Machines
 
 1. [Laboratory (Easy)](https://github.com/Pash3nlee/HackTheBox/blob/main/Easy/Laboratory.md)
-   >*GitLab, LFI&RCE, Docker, Reverse Engineering, PATH hijacking*
+   >*GitLab, LFI, RCE, Docker, Reverse Engineering, PATH hijacking*
 2. [Ready (Medium)](https://github.com/Pash3nlee/HackTheBox/blob/main/Medium/Ready.md)
    >*GitLab, RCE, Docker, Privileged Docker container, Escape*
