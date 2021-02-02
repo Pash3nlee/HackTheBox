@@ -4,27 +4,59 @@
 
 | Point | Description |
 | :------:| :------: |
-| Name | Laboratory   |
+| Name | Academy |
 | OS   | Linux  |
 | Difficulty Rating| Easy   |
-| Release | 14 Nov 2020   |
-| IP | 10.10.10.216   |
-| Owned | 16.01.2021 |
+| Release | 07 Nov 2020   |
+| IP | 10.10.10.215   |
+| Owned | 01.02.2021 |
+
 # Short retelling
-* Using Nmap and find new subdomain
-* Register on this site and find version of service
-* Find CVE for this kind of web-server
-* Checking CVE
-* Run Docker same version
-* Configure it and create explotation of RCE
-* Upload reverse shell comand to web-server and run it
-* Connected to machine
-* Trying to escape from docker, use git railway-console
-* Change password of gitlab's administration
-* Sign in with admin login and our new password
-* Find id_rsa in folder /.ssh
-* SSH coonect to the host and find user.txt
-* Find bin programm
-* Check it with radare2
-* Find way to use the path hijacking
+* Using gobuster and find interesting php pages
+* Checking source code of pages
+* Find "key", that helps to login as admin
+* Check information in admin's pages
+* Checking CVE for app
+* Using RCE to get reverse shell
+* Find information about users
+* Get user.txt
+* Checking way for privilege escalation
+* Get access from another user
+* Privilege escalation with composer
 * Get root.txt
+
+# Enumeration
+
+## Nmap
+
+Recon host 10.10.10.215 with nmap. Add academy.htb to /etc/hosts
+```
+NMAP
+NMAP
+NMAP
+```
+
+Ports 80 and 22 are open. 
+
+Lets check academy.htb
+![](IMAGE)
+
+We can see that there is two options available for login & Register.
+Lets try to reqister.
+
+Redirect, and we can see a new page home.php, surfing, find out username **egre55** (probably admin). But we find nothing more interesting.
+Check source code.. and find nothing too.
+
+## Gobuster
+
+So lets enumerate webserver path and files.
+
+```
+GOBUSTER
+GOBUSTER
+```
+
+And we see new page - **admin.php** and directory - **images**.
+
+![](image)
+
