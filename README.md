@@ -3,7 +3,7 @@
 ![](https://www.daviddomoney.com/wp-content/uploads/2015/05/cat-in-the-garden.jpg)
 ###### since 10.01.2021
 
-### I recently started trying machines on HackTheBox and I'm going to publicate here my progrees.
+### I recently started trying machines on HackTheBox and I'm going to publicate here my progress.
 [HackTheBox Profile](https://www.hackthebox.eu/home/users/profile/480331)
 
 ## Machines
