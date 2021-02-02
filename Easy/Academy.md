@@ -40,14 +40,18 @@ NMAP
 Ports 80 and 22 are open. 
 
 Lets check academy.htb
+
 ![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-02-02_223157.png)
 
 We can see that there is two options available for login & Register.
-Lets try to reqister.
+
+Lets try to register.
+
 ![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-02-02_223345.png)
 
 
 Redirect, and we can see a new page - *home.php*, surfing, find out username **egre55** (probably admin). But we find nothing more interesting.
+
 ![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-02-02_223452.png)
 
 Check source code.. and find nothing too.
@@ -86,12 +90,14 @@ http://academy.htb/register.php (Status: 200)
 2021/02/02 10:38:35 Finished
 ===============================================================
 ```
+
 And we see new pages - *admin.php*, *config.php*. 
 
 Admin.php page looks like login.php.
 Config.php page has white list.
 
 Brute directories...
+
 ```
 ┌──(root💀kali)-[/home/kali]
 └─# ffuf -w /usr/share/seclists/Discovery/Web-Content/big.txt -u http://academy.htb/FUZZ  -mc 200,302 
