@@ -60,3 +60,7 @@ And we see new page - **admin.php** and directory - **images**.
 
 ![](image)
 
+Admin.php looks like login.php
+
+No ideas, let's chec
+
