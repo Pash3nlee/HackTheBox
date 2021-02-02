@@ -40,7 +40,7 @@ NMAP
 Ports 80 and 22 are open. 
 
 Lets check academy.htb
-![](IMAGE)
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-02-02_222917.png)
 
 We can see that there is two options available for login & Register.
 Lets try to reqister.
