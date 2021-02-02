@@ -14,7 +14,8 @@
 # Short retelling
 * Using gobuster and find interesting php pages
 * Checking source code of pages
-* Find "key", that helps to login as admin
+* Find hidden string
+* Login as admin with Burp
 * Check information in admin's pages
 * Checking CVE for app
 * Using RCE to get reverse shell
@@ -62,5 +63,25 @@ And we see new page - **admin.php** and directory - **images**.
 
 Admin.php looks like login.php
 
-No ideas, let's chec
+No ideas, let's check source code of pages login.php, admin.php and register.php.
+And find interesting hidden string win roleid.
+
+I think this is related to the permission, how a user going to treat is based on the roleid.
+I start Burp suite to check how to send this parameter.
+I change the roleid=1 and i got myself registered , yeah !!
+
+Login as admninstrator on admin.php and check information.
+
+![](image)
+
+So we see another VHOST **dev-staging-01.academy.htb** and add to /etc/hosts
+
+# Explotation
+
+
+# Privilege Escalation#1
+
+# Privilege Escalation#2
+
+# Privilege Escalation#3
 
