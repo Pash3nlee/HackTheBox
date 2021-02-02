@@ -63,7 +63,7 @@ And we see new page - **admin.php** and directory - **images**.
 
 Admin.php looks like login.php
 
-No ideas, let's check source code of pages login.php, admin.php and register.php.
+No ideas, let's check source code of pages *login.php, admin.php and register.php*.
 And find interesting hidden string win roleid.
 
 I think this is related to the permission, how a user going to treat is based on the roleid.
