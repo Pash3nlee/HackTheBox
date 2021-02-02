@@ -1,6 +1,6 @@
 # Introduction
 
-![Academy](https://www.hackthebox.eu/storage/avatars/10c8da0b46f53c882da946668dcdab95.png)
+[![Academy](https://www.hackthebox.eu/storage/avatars/10c8da0b46f53c882da946668dcdab95.png)](https://www.hackthebox.eu/home/machines/profile/297)
 
 | Point | Description |
 | :------:| :------: |
