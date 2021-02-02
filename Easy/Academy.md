@@ -74,7 +74,8 @@ Login as admninstrator on admin.php and check information.
 
 ![](image)
 
-So we see another VHOST **dev-staging-01.academy.htb** and add to /etc/hosts
+So we see another VHOST **dev-staging-01.academy.htb** and add to /etc/hosts. 
+Also we find out about second user **mrb3n**
 
 # Explotation
 
