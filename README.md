@@ -12,3 +12,5 @@
    >*Linux, GitLab, LFI, RCE, Docker, Reverse Engineering, PATH hijacking*
 2. [Ready (Medium)](https://github.com/Pash3nlee/HackTheBox/blob/main/Medium/Ready.md)
    >*Linux, GitLab, RCE, Docker, Privileged Docker container, Escape*
+3. [Academy (Easy)](https://github.com/Pash3nlee/HackTheBox/blob/main/Easy/Academy.md)
+   >*Linux, PHP, Laravel, RCE, privilege escalation compose
