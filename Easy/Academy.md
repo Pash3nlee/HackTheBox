@@ -328,6 +328,7 @@ drwxr-xr-x 8 root  root  4096 Aug 10 00:34 ../
 -rw-r--r-- 1 21y4d 21y4d 3771 Feb 25  2020 .bashrc
 -rw-r--r-- 1 21y4d 21y4d  220 Feb 25  2020 .bash_logout
 -rw-r--r-- 1 21y4d 21y4d  807 Feb 25  2020 .profile
+
 www-data@academy:/home$ ls -lvpa ch4p
 ls -lvpa ch4p
 total 20
@@ -336,6 +337,7 @@ drwxr-xr-x 8 root root 4096 Aug 10 00:34 ../
 -rw-r--r-- 1 ch4p ch4p 3771 Feb 25  2020 .bashrc
 -rw-r--r-- 1 ch4p ch4p  220 Feb 25  2020 .bash_logout
 -rw-r--r-- 1 ch4p ch4p  807 Feb 25  2020 .profile
+
 www-data@academy:/home$ ls -lvpa cry0l1t3
 ls -lvpa cry0l1t3
 total 32
@@ -348,6 +350,7 @@ drwx------ 2 cry0l1t3 cry0l1t3 4096 Aug 12 21:58 .cache/
 drwxrwxr-x 3 cry0l1t3 cry0l1t3 4096 Aug 12 02:30 .local/
 -rw-r--r-- 1 cry0l1t3 cry0l1t3  807 Feb 25  2020 .profile
 -r--r----- 1 cry0l1t3 cry0l1t3   33 Feb  2 08:49 user.txt
+
 www-data@academy:/home$ ls -lvpa egre55
 ls -lvpa egre55
 total 24
@@ -359,6 +362,7 @@ lrwxrwxrwx 1 root   root      9 Aug 10 23:41 .bash_history -> /dev/null
 drwx------ 2 egre55 egre55 4096 Aug  7 12:13 .cache/
 -rw-r--r-- 1 egre55 egre55  807 Feb 25  2020 .profile
 -rw-r--r-- 1 egre55 egre55    0 Aug  7 12:14 .sudo_as_admin_successful
+
 www-data@academy:/home$ ls -lvpa g0blin
 ls -lvpa g0blin
 total 20
@@ -367,6 +371,7 @@ drwxr-xr-x 8 root   root   4096 Aug 10 00:34 ../
 -rw-r--r-- 1 g0blin g0blin 3771 Feb 25  2020 .bashrc
 -rw-r--r-- 1 g0blin g0blin  220 Feb 25  2020 .bash_logout
 -rw-r--r-- 1 g0blin g0blin  807 Feb 25  2020 .profile
+
 www-data@academy:/home$ ls -lvpa mrb3n
 ls -lvpa mrb3n
 total 36
