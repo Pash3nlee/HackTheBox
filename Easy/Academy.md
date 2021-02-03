@@ -440,7 +440,7 @@ $ /bin/bash
 cry0l1t3@academy:~$ 
 ```
 
-And we have success. Get user.txt
+And we have success. Get **user.txt**
 
 ```
 cry0l1t3@academy:~$ ls
