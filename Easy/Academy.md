@@ -102,7 +102,7 @@ Lets try to register.
 ![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-02-02_223345.png)
 
 
-Redirect, and we can see a new page - *home.php*, surfing, find out username **egre55** (probably admin). But we find nothing more interesting.
+Redirect, and we can see a new page - *home.php*, surfing, find out username **egre55** (probably admin). But we found nothing more interesting.
 
 ![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-02-02_223452.png)
 
