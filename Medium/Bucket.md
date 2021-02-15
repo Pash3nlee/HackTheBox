@@ -13,12 +13,14 @@
 
 # Short retelling
 
-* Find version of GitLab
-* Get reverse shell
-* Get user.txt
-* Find way to privilege-escalation
-* Escape form container
-* Get root.txt
+* Find a subdomain
+* Enamuration services
+* With aws cli recon DynamoDB
+* Find buckets
+* Upload a php reverse shell
+* Get the user.txt
+* Create the table with RCE in DynamoDB
+* Get the root.txt
 
 # Enumeration
 
