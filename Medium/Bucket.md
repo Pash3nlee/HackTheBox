@@ -16,7 +16,7 @@
 * Find a subdomain
 * Enamuration services
 * Recon DynamoDB with AWS CLI
-* Find buckets
+* Find buckets in S3 AWS
 * Upload a php reverse shell
 * Get the user.txt
 * Create the table with RCE in DynamoDB
