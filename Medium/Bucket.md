@@ -60,46 +60,45 @@ We found out subdomain **s3.bucket.htb**. Add it to /etc/hosts and check http://
 
 ![Bucket](https://www.hackthebox.eu/storage/avatars/3f07dd46f3ff7d287d2f736b18c6ded7.png)
 
-## Dirb
+We see just ‘{“status”: “running”}’ on the webpage.
 
-Lets check open directory of http://10.10.10.220:5080/.
+![Bucket](https://www.hackthebox.eu/storage/avatars/3f07dd46f3ff7d287d2f736b18c6ded7.png)
+
+## FuFF
+
+Next step will be enumerating drectories of s3.bucket.htb.
 
 ```
-┌──(root💀kali)-[/home/kali/HTB/Ready]
-└─# dirb http://10.10.10.220:5080/                                                             
+┌──(root💀kali)-[/home/kali]
+└─# ffuf -w /usr/share/SecLists/Discovery/Web-Content/big.txt -u http://s3.bucket.htb/FUZZ -e php,txt,htm,html,phtml,js,zip,rar,tar -mc 200,302 
 
------------------
-DIRB v2.22    
-By The Dark Raver
------------------
+        /'___\  /'___\           /'___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
 
-START_TIME: Sun Jan 24 06:13:16 2021
-URL_BASE: http://10.10.10.220:5080/
-WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+       v1.3.0-git
+________________________________________________
 
------------------
+ :: Method           : GET
+ :: URL              : http://s3.bucket.htb/FUZZ
+ :: Wordlist         : FUZZ: /usr/share/SecLists/Discovery/Web-Content/big.txt
+ :: Extensions       : php txt htm html phtml js zip rar tar 
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200,302
+________________________________________________
 
-GENERATED WORDS: 4612                                                          
-
----- Scanning URL: http://10.10.10.220:5080/ ----
-+ http://10.10.10.220:5080/explore (CODE:200|SIZE:13343)                                                                                                                  
-+ http://10.10.10.220:5080/favicon.ico (CODE:301|SIZE:174)                                                                                                                
-+ http://10.10.10.220:5080/groups (CODE:302|SIZE:105)                                                                                                                     
-+ http://10.10.10.220:5080/help (CODE:200|SIZE:37973)                                                                                                                     
-+ http://10.10.10.220:5080/projects (CODE:302|SIZE:98)                                                                                                                    
-+ http://10.10.10.220:5080/public (CODE:200|SIZE:13422)                                                                                                                   
-+ http://10.10.10.220:5080/robots.txt (CODE:200|SIZE:2095)                                                                                                                
-+ http://10.10.10.220:5080/root (CODE:200|SIZE:15795)                                                                                                                     
-+ http://10.10.10.220:5080/Root (CODE:302|SIZE:95)                                                                                                                        
-+ http://10.10.10.220:5080/search (CODE:200|SIZE:12693)                                                                                                                   
-+ http://10.10.10.220:5080/snippets (CODE:302|SIZE:107)                                                                                                                   
-+ http://10.10.10.220:5080/test (CODE:200|SIZE:15754)                                                                                                                     
-                                                                                                                                                                          
------------------
-END_TIME: Sun Jan 24 06:27:15 2021
-DOWNLOADED: 4612 - FOUND: 12                                                                            
+health                  [Status: 200, Size: 54, Words: 5, Lines: 1]
+shell                   [Status: 200, Size: 0, Words: 1, Lines: 1]
+:: Progress: [204750/204750] :: Job [1/1] :: 109 req/sec :: Duration: [0:32:40] :: Errors: 40 ::                                                                          
 ```
-We find some directories, checking everithing and nothithng interesting.
+
+We find two directories: s3.bucket.htb/health ans s3.bucket.htb/shell.
 
 # Explotation#1
 
