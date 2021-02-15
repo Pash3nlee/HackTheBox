@@ -25,37 +25,40 @@
 # Enumeration
 
 ## Nmap
-Start to recon host Ready 10.10.10.220 with nmap
+
+Lets start reconing host Ready 10.10.10.212 with Nmap
 
 ```
-Starting Nmap 7.91 ( https://nmap.org ) at 2021-01-22 10:17 EST
-Nmap scan report for 10.10.10.220
-Host is up (0.17s latency).
+┌──(root💀kali)-[/home/kali]
+└─# nmap -sV -sC -p- 10.10.10.212
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-02-15 04:49 EST
+Stats: 0:07:31 elapsed; 0 hosts completed (1 up), 1 undergoing SYN Stealth Scan
+SYN Stealth Scan Timing: About 72.44% done; ETC: 04:59 (0:02:51 remaining)
+Nmap scan report for bucket.htb (10.10.10.212)
+Host is up (0.29s latency).
 Not shown: 65533 closed ports
-PORT     STATE SERVICE VERSION
-22/tcp   open  ssh     OpenSSH 8.2p1 Ubuntu 4 (Ubuntu Linux; protocol 2.0)
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4 (Ubuntu Linux; protocol 2.0)
 | ssh-hostkey: 
 |   3072 48:ad:d5:b8:3a:9f:bc:be:f7:e8:20:1e:f6:bf:de:ae (RSA)
 |   256 b7:89:6c:0b:20:ed:49:b2:c1:86:7c:29:92:74:1c:1f (ECDSA)
 |_  256 18:cd:9d:08:a6:21:a8:b8:b6:f7:9f:8d:40:51:54:fb (ED25519)
-5080/tcp open  http    nginx
-|_http-favicon: Unknown favicon MD5: F7E3D97F404E71D302B3239EEF48D5F2
-| http-methods: 
-|_  Supported Methods: GET HEAD POST OPTIONS
-| http-robots.txt: 53 disallowed entries (15 shown)
-| / /autocomplete/users /search /api /admin /profile 
-| /dashboard /projects/new /groups/new /groups/*/edit /users /help 
-|_/s/ /snippets/new /snippets/*/edit
-| http-title: Sign in \xC2\xB7 GitLab
-|_Requested resource was http://10.10.10.220:5080/users/sign_in
-|_http-trane-info: Problem with XML parsing of /evox/about
-Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+80/tcp open  http    Apache httpd 2.4.41
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+|_http-title: Site doesn't have a title (text/html).
+Service Info: Host: 127.0.1.1; OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
-Lets check site on 5080/tcp port.
+We find 80/tcp and 22/tcp ports, so lets check web-site bucket.htb.
 
-![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-01-24_181047.png)
+![Bucket](https://www.hackthebox.eu/storage/avatars/3f07dd46f3ff7d287d2f736b18c6ded7.png)
 
-GitLab is running on this host.
+The hyperlinks on the pages are leading to nothing. Lets analyze source code of the page.
+
+![Bucket](https://www.hackthebox.eu/storage/avatars/3f07dd46f3ff7d287d2f736b18c6ded7.png)
+
+We found out subdomain **s3.bucket.htb**. Add it to /etc/hosts and check http://s3.bucket.htb webpage.
+
+![Bucket](https://www.hackthebox.eu/storage/avatars/3f07dd46f3ff7d287d2f736b18c6ded7.png)
 
 ## Dirb
 
