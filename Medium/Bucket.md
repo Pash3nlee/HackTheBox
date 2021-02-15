@@ -20,7 +20,7 @@
 * Upload a php reverse shell
 * Get the user.txt
 * Create the table with RCE in DynamoDB
-* Get the root.txt
+* Get root's ia_rsa and root.txt
 
 # Enumeration
 
