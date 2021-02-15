@@ -15,7 +15,7 @@
 
 * Find a subdomain
 * Enamuration services
-* With aws cli recon DynamoDB
+* Recon DynamoDB with AWS CLI
 * Find buckets
 * Upload a php reverse shell
 * Get the user.txt
