@@ -26,7 +26,7 @@
 
 ## Nmap
 
-Lets start reconing host Ready 10.10.10.212 with Nmap
+Lets start reconing machine "Bucket" 10.10.10.212 with Nmap
 
 ```
 ┌──(root💀kali)-[/home/kali]
