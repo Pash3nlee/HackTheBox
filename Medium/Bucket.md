@@ -1,15 +1,15 @@
 # Introduction
 
-[![Bucket](https://www.hackthebox.eu/storage/avatars/3f07dd46f3ff7d287d2f736b18c6ded7.png)
+![Bucket](https://www.hackthebox.eu/storage/avatars/3f07dd46f3ff7d287d2f736b18c6ded7.png)
 
 | Point | Description |
 | :------:| :------: |
-| Name | Ready   |
+| Name | Bucket  |
 | OS   | Linux  |
 | Difficulty Rating| Medium   |
 | Release | 12 Dec 2020   |
 | IP | 10.10.10.220   |
-| Owned | 24.01.2021 |
+| Owned | 17 Oct 2020 |
 
 # Short retelling
 
