@@ -48,7 +48,7 @@ PORT   STATE SERVICE VERSION
 |_http-title: Site doesn't have a title (text/html).
 Service Info: Host: 127.0.1.1; OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
-We find 80/tcp and 22/tcp ports, so lets check web-site bucket.htb.
+We find 80/tcp and 22/tcp ports, so lets check website http://bucket.htb.
 
 ![Bucket](https://www.hackthebox.eu/storage/avatars/3f07dd46f3ff7d287d2f736b18c6ded7.png)
 
