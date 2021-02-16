@@ -52,21 +52,24 @@ We find 80/tcp and 22/tcp ports, so lets check website http://bucket.htb.
 
 ![Bucket](https://github.com/Pash3nlee/HackTheBox/raw/main/images/10.PNG)
 
-The hyperlinks on the pages are leading to nothing. Lets analyze source code of the page.
+The hyperlinks on the pages are leading to nothing.
+
+Enumerating directories gives no results.
+
+Lets analyze source code of the page.
 
 ![Bucket](https://github.com/Pash3nlee/HackTheBox/raw/main/images/11.PNG)
 
 We found out subdomain **s3.bucket.htb**. Add it to /etc/hosts and check http://s3.bucket.htb webpage.
 
-![Bucket](https://www.hackthebox.eu/storage/avatars/3f07dd46f3ff7d287d2f736b18c6ded7.png)
+![Bucket](https://github.com/Pash3nlee/HackTheBox/raw/main/images/12.PNG
 
 We see just ‘{“status”: “running”}’ on the webpage.
 
-![Bucket](https://www.hackthebox.eu/storage/avatars/3f07dd46f3ff7d287d2f736b18c6ded7.png)
 
 ## FuFF
 
-Next step will be enumerating drectories of s3.bucket.htb.
+Next step will be enumerating directories of s3.bucket.htb.
 
 ```
 ┌──(root💀kali)-[/home/kali]
