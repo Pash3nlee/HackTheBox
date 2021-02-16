@@ -133,7 +133,34 @@ We need to find hacking tricks with AWS Simple Storage Service.
 
 Ok, in every exploits is using AWS CLI on host, but we have web-shell *DynamoDB JavaScript Shell*.
 
-We find how to check tables in dynamodb with javascript here(https://stackoverflow.com/questions/57988963/how-to-access-dynamodb-local-using-dynamodb-javascript-shell).
+We find how to check tables in dynamodb with javascript [here](https://stackoverflow.com/questions/57988963/how-to-access-dynamodb-local-using-dynamodb-javascript-shell).
+
+```
+var params = {
+    TableName: 'my-table',
+    Limit: 10
+};
+dynamodb.scan(params, function(err, data) {
+    if (err) ppJson(err); // an error occurred
+    else ppJson(data); // successful response
+});
+```
+
+We guess about table's names. And table name 'users' gets true result.
+
+![Bucket](https://github.com/Pash3nlee/HackTheBox/raw/main/images/15.PNG)
+
+We find out about credetials (three usernames and three passwords).
+
+```
+Mgmt:Management@#1@#
+Cloudadm:Welcome123!
+Sysadm:n2vM-<_K_Q:.Aa2
+```
+
+Tried to use the credentials to get an SSH shell, but it’s not working. We need to do more enumeration to get a shell on this box or a reverse shell.
+
+
 
 # Privilege Escalation#1
 
