@@ -633,7 +633,7 @@ Open result.pdf
 
 And we get **root's id_rsa**.
 
-Create new file *id_rsa* and set privileges `chmod 600 id_rsa`.
+Create new file *id_rsa* and copy there info from result.pdf. Set privileges `chmod 600 id_rsa`.
 
 We get **root.txt**
 
