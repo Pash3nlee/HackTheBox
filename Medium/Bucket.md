@@ -146,7 +146,7 @@ dynamodb.scan(params, function(err, data) {
 });
 ```
 
-We guess about table's names. And table name 'users' gets true result.
+We guess about table's names. And table name 'users' gets true result. I can't guess another table's names.
 
 ![Bucket](https://github.com/Pash3nlee/HackTheBox/raw/main/images/15.PNG)
 
