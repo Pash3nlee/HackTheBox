@@ -446,7 +446,7 @@ We need in privilege escalation, so run [LinPEAS Script](https://github.com/carl
 
 And can't see sometheng interesting in the report.
 
-And we remember about credentials, which we find in DynamoDB:
+And we remember about credentials, which were fond in DynamoDB:
 
 ```
 Mgmt: Management@#1@#
@@ -454,7 +454,18 @@ Cloudadm: Welcome123!
 Sysadm: n2vM-<_K_Q:.Aa2
 ```
 
-Use `su roy` and password 'n2vM-<_K_Q:.Aa2' is right.
+Use `su roy` and password `n2vM-<_K_Q:.Aa2` is right.
+
+Also we could notice, that roy belongs to group *sysadm*
+
+```
+[+] All users & groups
+uid=0(root) gid=0(root) groups=0(root)
+uid=1(daemon[0m) gid=1(daemon[0m) groups=1(daemon[0m)
+uid=10(uucp) gid=10(uucp) groups=10(uucp)
+uid=100(systemd-network) gid=102(systemd-network) groups=102(systemd-network)
+uid=1000(roy) gid=1000(roy) groups=1000(roy),1001(sysadm)
+```
 
 # Privilege Escalation#2
 
