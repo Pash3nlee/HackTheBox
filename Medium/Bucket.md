@@ -117,6 +117,8 @@ Lets visit the http://s3.bucket.htb/shell/
 
 Ok, we have two services *s3* and *dynamodb* and we have *DynamoDB JavaScript Shell* of amazon web services.
 
+Let's use google to get more information.
+
 >>> An Amazon S3 bucket is a public cloud storage resource available in Amazon Web Services' (AWS) Simple Storage Service (S3), an object storage offering. Amazon S3 buckets, which are similar to file folders, store objects, which consist of data and its descriptive metadata.
 
 >>> A bucket is a container for objects stored in Amazon S3. Every object is contained in a bucket. For example, if the object named photos/puppy.jpg is stored in the awsexamplebucket1 bucket in the US West (Oregon) Region, then it is addressable using the URL https://awsexamplebucket1.s3.us-west-2.amazonaws.com/photos/puppy.jpg. 
