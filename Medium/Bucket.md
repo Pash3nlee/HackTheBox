@@ -567,9 +567,7 @@ else
 4. Put contetnt to *data*
 5. Prints the data from that table into a PDF using Pd4Cmd
 
-We remeber, that we saw just one tablename *users*.
-
-So let's [create](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/getting-started-step-1.html) a new table name *alerts*.
+We remeber, that we saw just one tablename *users*. So let's [create](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/getting-started-step-1.html) a new table name *alerts*.
 
 AWS configure:
 
