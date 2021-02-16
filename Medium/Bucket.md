@@ -486,6 +486,106 @@ uid=1000(roy) gid=1000(roy) groups=1000(roy),1001(sysadm)
 
 # Privilege Escalation#2
 
+Use ssh connection with `roy` and password `n2vM-<_K_Q:.Aa2`.
+
+Checking `sudo -l`
+
+```
+roy@bucket:~$ sudo -l
+[sudo] password for roy: 
+Sorry, user roy may not run sudo on bucket.
+```
+We find  interesting directory, but still no idea...
+
+```
+roy@bucket:~$ ls
+project  user.txt
+roy@bucket:~$ cd project/
+roy@bucket:~/project$ ls
+composer.json  composer.lock  db.php  vendor
+```
+
+Upload and run [LinPEAS Script](https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/tree/master/linPEAS).
+
+Report of LinPEAS s showing that there is a web application located in the `/var/www/bucket-app` location.
+
+```
+[+] Readable files belonging to root and readable by me but not world readable
+-rwxr-x---+ 1 root root 808729 Jun 10  2020 /var/www/bucket-app/pd4ml_demo.jar                                    
+-rw-r-x---+ 1 root root 358 Aug  6  2016 /var/www/bucket-app/vendor/psr/http-message/README.md
+-rw-r-x---+ 1 root root 1085 Aug  6  2016 /var/www/bucket-app/vendor/psr/http-message/LICENSE
+-rw-r-x---+ 1 root root 4689 Aug  6  2016 /var/www/bucket-app/vendor/psr/http-message/src/UploadedFileInterface.ph
+```
+
+Let's check this folder:
+
+```
+roy@bucket:~/project$ cd /var/www/bucket-app/
+roy@bucket:/var/www/bucket-app$ ls
+composer.json  composer.lock  files  index.php  pd4ml_demo.jar  vendor
+```
+
+We analyze the **index.php**, and see what this webpage actually is doing.
+
+```
+?php
+require 'vendor/autoload.php';
+use Aws\DynamoDb\DynamoDbClient;
+if($_SERVER["REQUEST_METHOD"]==="POST") {
+        if($_POST["action"]==="get_alerts") {
+                date_default_timezone_set('America/New_York');
+                $client = new DynamoDbClient([
+                        'profile' => 'default',
+                        'region'  => 'us-east-1',
+                        'version' => 'latest',
+                        'endpoint' => 'http://localhost:4566'
+                ]);
+
+                $iterator = $client->getIterator('Scan', array(
+                        'TableName' => 'alerts',
+                        'FilterExpression' => "title = :title",
+                        'ExpressionAttributeValues' => array(":title"=>array("S"=>"Ransomware")),
+                ));
+
+                foreach ($iterator as $item) {
+                        $name=rand(1,10000).'.html';
+                        file_put_contents('files/'.$name,$item["data"]);
+                }
+                passthru("java -Xmx512m -Djava.awt.headless=true -cp pd4ml_demo.jar Pd4Cmd file:///var/www/bucket>
+        }
+}
+else
+{
+?>
+
+...
+```
+
+1. Checks if the HTTP request is *POST*
+2. If its true, then creating *new DynamoDbClient*
+3. After start scaning table with name *alerts* and search for a title with the word *Ransomware*
+4. Put contetnt to *data*
+5. Prints the data from that table into a PDF using Pd4Cmd
+
+We remeber, that we saw just one tablename *users*.
+
+So let's [create](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/getting-started-step-1.html) a new table name *alerts*.
+
+AWS configure:
+
+```
+roy@bucket:/var/www/bucket-app$ aws configure
+AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
+AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+Default region name [None]: us-east-1
+Default output format [None]: text
+```
+
+Create table **alerts**:
+
+```
+
+
 
 
 # Result and Resources
