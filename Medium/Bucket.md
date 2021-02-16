@@ -125,6 +125,16 @@ Let's use google to get more information.
 
 >>> DynamoDB is a key-value, noSQL database developed by Amazon. It’s unlike some other products offered by Amazon and other vendors in that it’s not just an open source system, like Spark, hosted on the vendor’s platform. Amazon wrote this for their own internal needs and now they make it available to their customers.
 
+We need to find hacking tricks with AWS Simple Storage Service.
+
+* https://blog.appsecco.com/getting-shell-and-data-access-in-aws-by-chaining-vulnerabilities-7630fa57c7ed
+* https://medium.com/@cvignesh28/aws-s3-bucket-misconfiguration-c11e8f86e9a7
+* https://blog.securelayer7.net/hands-on-aws-s3-bucket-vulnerabilities/
+
+Ok, in every exploits is using AWS CLI on host, but we have web-shell *DynamoDB JavaScript Shell*.
+
+We find how to check tables in dynamodb with javascript here(https://stackoverflow.com/questions/57988963/how-to-access-dynamodb-local-using-dynamodb-javascript-shell).
+
 # Privilege Escalation#1
 
 # Privilege Escalation#2
