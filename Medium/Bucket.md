@@ -162,17 +162,19 @@ Try to use the credentials to get an SSH shell, but it’s not working.
 
 We need to do more enumeration to get a shell on this box or a reverse shell.
 
-# Privilege Escalation#1
-
 Ok, we also can check buckets in s3.bucket.htb.
 
 There are three [vulnerabilities](https://blog.securelayer7.net/hands-on-aws-s3-bucket-vulnerabilities/) of AWS S3:
 
->>> S3 bucket configured to allow anonymous users to list, read or write data to the bucket.
+> S3 bucket configured to allow anonymous users to list, read or write data to the bucket.
 
->>> S3 bucket configured to allow access to authenticated users. In this case, a valid AWS access key and secret are required to test for this condition.
+> S3 bucket configured to allow access to authenticated users. In this case, a valid AWS access key and secret are required to test for this condition.
 
->>> Amazon S3 access control lists (ACLs) enables us to manage our access to AWS S3 buckets. Each bucket and object has its ACL attached to it as a subresource. It also defines which AWS accounts or groups should be granted access and the type of access. This permission are readable publically this doesn’t show any type of misconfiguration of the bucket itself but may reveal which users have what type of access. 
+> Amazon S3 access control lists (ACLs) enables us to manage our access to AWS S3 buckets. Each bucket and object has its ACL attached to it as a subresource. It also defines which AWS accounts or groups should be granted access and the type of access. This permission are readable publically this doesn’t show any type of misconfiguration of the bucket itself but may reveal which users have what type of access.
+
+# Privilege Escalation#1
+
+ 
 
 # Privilege Escalation#2
 
