@@ -153,12 +153,12 @@ We guess about table's names. And table name 'users' gets true result.
 We find out about credetials (three usernames and three passwords).
 
 ```
-Mgmt:Management@#1@#
-Cloudadm:Welcome123!
-Sysadm:n2vM-<_K_Q:.Aa2
+Mgmt: Management@#1@#
+Cloudadm: Welcome123!
+Sysadm: n2vM-<_K_Q:.Aa2
 ```
 
-Tried to use the credentials to get an SSH shell, but it’s not working. We need to do more enumeration to get a shell on this box or a reverse shell.
+Try to use the credentials to get an SSH shell, but it’s not working. We need to do more enumeration to get a shell on this box or a reverse shell.
 
 
 
