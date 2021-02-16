@@ -50,11 +50,11 @@ Service Info: Host: 127.0.1.1; OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
 We find 80/tcp and 22/tcp ports, so lets check website http://bucket.htb.
 
-![Bucket](https://www.hackthebox.eu/storage/avatars/3f07dd46f3ff7d287d2f736b18c6ded7.png)
+![Bucket](https://github.com/Pash3nlee/HackTheBox/raw/main/images/10.PNG)
 
 The hyperlinks on the pages are leading to nothing. Lets analyze source code of the page.
 
-![Bucket](https://www.hackthebox.eu/storage/avatars/3f07dd46f3ff7d287d2f736b18c6ded7.png)
+![Bucket](https://github.com/Pash3nlee/HackTheBox/raw/main/images/11.PNG)
 
 We found out subdomain **s3.bucket.htb**. Add it to /etc/hosts and check http://s3.bucket.htb webpage.
 
