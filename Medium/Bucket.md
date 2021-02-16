@@ -101,7 +101,7 @@ shell                   [Status: 200, Size: 0, Words: 1, Lines: 1]
 :: Progress: [204750/204750] :: Job [1/1] :: 109 req/sec :: Duration: [0:32:40] :: Errors: 40 ::                                                                          
 ```
 
-We find two directories: s3.bucket.htb/health ans s3.bucket.htb/shell.
+We find two directories: *s3.bucket.htb/health* ans *s3.bucket.htb/shell*.
 
 # Explotation#1
 
