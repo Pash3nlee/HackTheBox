@@ -608,7 +608,7 @@ CONSUMEDCAPACITY        1.0     alerts
 Send POST POST with `action=get_alerts`
 
 ```
-roy@bucket:/var/www/bucket-app/files$ curl --data "action=get_alerts" http://localhost:8000/
+roy@bucket:/var/www/bucket-app/files$ curl -X POST -d "action=get_alerts" http://127.0.0.1:8000/
 ```
 
 And get result.pdf
