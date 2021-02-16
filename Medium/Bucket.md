@@ -115,6 +115,14 @@ Lets visit the http://s3.bucket.htb/shell/
 
 # Explotation
 
+Ok, we have two services *s3* and *dynamodb* and we have *DynamoDB JavaScript Shell* of amazon web services.
+
+>>> An Amazon S3 bucket is a public cloud storage resource available in Amazon Web Services' (AWS) Simple Storage Service (S3), an object storage offering. Amazon S3 buckets, which are similar to file folders, store objects, which consist of data and its descriptive metadata.
+
+>>> A bucket is a container for objects stored in Amazon S3. Every object is contained in a bucket. For example, if the object named photos/puppy.jpg is stored in the awsexamplebucket1 bucket in the US West (Oregon) Region, then it is addressable using the URL https://awsexamplebucket1.s3.us-west-2.amazonaws.com/photos/puppy.jpg. 
+
+>>> DynamoDB is a key-value, noSQL database developed by Amazon. It’s unlike some other products offered by Amazon and other vendors in that it’s not just an open source system, like Spark, hosted on the vendor’s platform. Amazon wrote this for their own internal needs and now they make it available to their customers.
+
 # Privilege Escalation#1
 
 # Privilege Escalation#2
