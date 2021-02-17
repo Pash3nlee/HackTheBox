@@ -14,3 +14,5 @@
    >*Linux, GitLab, RCE, Docker, Privileged Docker container, Escape*
 3. [Academy (Easy)](https://github.com/Pash3nlee/HackTheBox/blob/main/Easy/Academy.md)
    >*Linux, PHP, Laravel, RCE, User enumeration, Privilege escalation compose*
+4. [Bucket (Medium)](https://github.com/Pash3nlee/HackTheBox/blob/main/Medium/Bucket.md)
+   >*Linux, AWS, DynamoDB, S3, AWS CLI, PHP reverse shell*
