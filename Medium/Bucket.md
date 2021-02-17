@@ -1,6 +1,6 @@
 # Introduction
 
-![Bucket](https://www.hackthebox.eu/storage/avatars/3f07dd46f3ff7d287d2f736b18c6ded7.png)(https://www.hackthebox.eu/home/machines/profile/283)
+[![Bucket](https://www.hackthebox.eu/storage/avatars/3f07dd46f3ff7d287d2f736b18c6ded7.png)](https://www.hackthebox.eu/home/machines/profile/283)
 
 | Point | Description |
 | :------:| :------: |
