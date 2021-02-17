@@ -1,6 +1,6 @@
 # Introduction
 
-![Bucket](https://www.hackthebox.eu/storage/avatars/3f07dd46f3ff7d287d2f736b18c6ded7.png)
+![Bucket](https://www.hackthebox.eu/storage/avatars/3f07dd46f3ff7d287d2f736b18c6ded7.png)(https://www.hackthebox.eu/home/machines/profile/283)
 
 | Point | Description |
 | :------:| :------: |
@@ -678,9 +678,11 @@ root@bucket:~# cat root.txt
 
 ### Root flag was a difficult for me and I used many hints. I have fully analyzed the solution, that was very interesting. I enjoyed this box.
 
-1. https://liveoverflow.com/gitlab-11-4-7-remote-code-execution-real-world-ctf-2018/
-2. https://github.com/dotPY-hax/gitlab_RCE
-3. https://blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/#method-2-using-socat
-4. https://medium.com/better-programming/escaping-docker-privileged-containers-a7ae7d17f5a1
-5. https://habr.com/ru/post/56049/
-6. https://docs.gitlab.com/ee/administration/troubleshooting/gitlab_rails_cheat_sheet.html
+1. https://blog.appsecco.com/getting-shell-and-data-access-in-aws-by-chaining-vulnerabilities-7630fa57c7ed
+2. https://medium.com/@cvignesh28/aws-s3-bucket-misconfiguration-c11e8f86e9a7
+3. https://blog.securelayer7.net/hands-on-aws-s3-bucket-vulnerabilities/
+4. https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html
+5. https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html
+6. https://docs.aws.amazon.com/cli/latest/userguide/cli-services-s3-commands.html
+7. https://github.com/pentestmonkey/php-reverse-shell/blob/master/php-reverse-shell.php
+8. https://docs.aws.amazon.com/cli/latest/userguide/cli-services-dynamodb.html
