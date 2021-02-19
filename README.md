@@ -16,3 +16,5 @@
    >*Linux, PHP, Laravel, RCE, User enumeration, Privilege escalation compose*
 4. [Bucket (Medium)](https://github.com/Pash3nlee/HackTheBox/blob/main/Medium/Bucket.md)
    >*Linux, AWS, DynamoDB, S3, AWS CLI, PHP reverse shell*
+5. [Doctor (Easy)](https://github.com/Pash3nlee/HackTheBox/blob/main/Easy/Doctor.md)
+   >*Linux, SSTI, Splunk Universal Forwarder misconfigurations*
