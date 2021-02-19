@@ -1,6 +1,6 @@
 # Introduction
 
-[![Doctor](https://github.com/Pash3nlee/HackTheBox/raw/main/images/doctor.PNG)](https://app.hackthebox.eu/machines/278)
+[![Doctor](https://www.hackthebox.eu/storage/avatars/256280ee1fb4fd4d7610881c209a2b5e.png)](https://app.hackthebox.eu/machines/278)
 
 | Point | Description |
 | :------:| :------: |
