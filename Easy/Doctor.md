@@ -55,7 +55,10 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 573.16 seconds
 ```
-Lets add doctor.htb to /etc/hosts and check site.
+
+There are three open ports 22 (SSH), 80 (HTTP) and 8089 (Splunkd).
+
+Let's start analyzing web-server and add doctor.htb to /etc/hosts and check site.
 
 ![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d1.PNG)
 
@@ -73,8 +76,26 @@ So let's register and try to find something interesting.
 
 ![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d4.PNG)
 
+We can write massages... Ok, let's find more.
 
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d6.PNG)
 
+Check source code of pages doctor.htb and doctors.htb.
+
+In the source code of the page doctor.htb there isn't a somethimg interesting, but in the source code of the page doctors.htb we find reference about beta-tsting archive in direcory /archive.
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d5.PNG)
+
+I should we need to bruteforce direcories of pages doctor.hrb and doctors.htb.
+
+And we remember about *Splunk* on https://10.10.10.209:8089/. Let's check it.
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d7.PNG)
+
+And we find out *version* of Splunk `Splunk build: 8.0.5`. Try to open some links and we get authorization form.
+Ok, we dont have any credentials.
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d8.PNG)
 
 ## FuFF
 
