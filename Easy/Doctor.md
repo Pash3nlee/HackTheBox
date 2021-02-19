@@ -99,8 +99,77 @@ Ok, we dont have any credentials.
 
 ## FuFF
 
+At first we will enumerate directories of doctor.htb
 
+```
+──(root💀kali)-[/home/kali/HTB/Doctor]
+└─# ffuf -w /usr/share/SecLists/Discovery/Web-Content/common.txt -u http://doctor.htb/FUZZ -e php,txt,htm,html,phtml,js,zip,rar,tar -mc 200,302
 
+        /'___\  /'___\           /'___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.3.0-git
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://doctor.htb/FUZZ
+ :: Wordlist         : FUZZ: /usr/share/SecLists/Discovery/Web-Content/common.txt
+ :: Extensions       : php txt htm html phtml js zip rar tar 
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200,302
+________________________________________________
+
+index.html              [Status: 200, Size: 19848, Words: 5808, Lines: 504]
+:: Progress: [46820/46820] :: Job [1/1] :: 231 req/sec :: Duration: [0:03:31] :: Errors: 0 ::
+```
+No results. Next step is doctors.htb
+
+```
+┌──(root💀kali)-[/home/kali/HTB/Doctor]
+└─# ffuf -w /usr/share/SecLists/Discovery/Web-Content/common.txt -u http://doctors.htb/FUZZ -e php,txt,htm,html,phtml,js,zip,rar,tar -mc 200,302
+
+        /'___\  /'___\           /'___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.3.0-git
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://doctors.htb/FUZZ
+ :: Wordlist         : FUZZ: /usr/share/SecLists/Discovery/Web-Content/common.txt
+ :: Extensions       : php txt htm html phtml js zip rar tar 
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200,302
+________________________________________________
+
+account                 [Status: 302, Size: 251, Words: 22, Lines: 4]
+archive                 [Status: 200, Size: 101, Words: 7, Lines: 6]
+home                    [Status: 302, Size: 245, Words: 22, Lines: 4]
+login                   [Status: 200, Size: 4204, Words: 1054, Lines: 95]
+logout                  [Status: 302, Size: 217, Words: 22, Lines: 4]
+register                [Status: 200, Size: 4493, Words: 1171, Lines: 101]
+:: Progress: [46820/46820] :: Job [1/1] :: 228 req/sec :: Duration: [0:03:25] :: Errors: 0 ::
+```
+
+And we find direcory */archive*. Let's open it. And we have a blank page.
+
+Checking the source code:
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d9.PNG)
 
 # Explotation#1
 
