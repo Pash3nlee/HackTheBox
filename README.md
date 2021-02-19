@@ -3,7 +3,8 @@
 ![](https://i.pinimg.com/originals/2a/db/1e/2adb1e4dbe67ce0ff39c4b080f015aa3.jpg)
 ###### since 10.01.2021
 
-### I recently started trying machines on HackTheBox and I'm going to publicate here my progress.
+### Hello my name is Pasha. I am yong specialist of information security. I am taking my first steps in this specialty. Recently I started trying to hack machines on HackTheBox. I'm going to publicate here my progress.
+
 [HackTheBox Profile](https://www.hackthebox.eu/home/users/profile/480331)
 
 ## Machines
