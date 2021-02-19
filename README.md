@@ -1,6 +1,6 @@
 # On My Way
 
-![](https://i.ytimg.com/vi/axC6EbNpKHc/maxresdefault.jpg)
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/cat.PNG)
 ###### since 10.01.2021
 
 ### I recently started trying machines on HackTheBox and I'm going to publicate here my progress.
