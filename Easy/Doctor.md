@@ -175,11 +175,11 @@ Checking the source code:
 
 When create message in doktors.htb, page redirect us to */home*
 
-![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d9.PNG)
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d10.PNG)
 
 In the source code of *doctors.htb/archive* we can see our *title*
 
-![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d9.PNG)
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d11.PNG)
 
 And we remember that the site was made with template. 
 
@@ -189,19 +189,19 @@ I [foud inforamtion](https://portswigger.net/research/server-side-template-injec
 
 Let's start with `{{7*7}}` and check the result in *doctors.htb/archive* 
 
-![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d10.PNG)
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d12.PNG)
 
 We see the result of the calculation `7*7=49`. With this information, I know that this website is vulnerable for *Sever-Side Template Injection*.
 
-![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d11.PNG)
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d13.PNG)
 
 The second step is to changing the payload to `{{7*’7′}}`. The result is again reflecting to the archive page.
 
-![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d12.PNG)
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d14.PNG)
 
 And template is *Jinja2*
 
-![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d13.PNG)
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/d15.PNG)
 
 Search in google rce for Jinja2:
 * https://www.onsecurity.io/blog/server-side-template-injection-with-jinja2/
