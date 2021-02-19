@@ -1,6 +1,6 @@
 # On My Way
 
-![](https://www.daviddomoney.com/wp-content/uploads/2015/05/cat-in-the-garden.jpg)
+![](https://i.ytimg.com/vi/axC6EbNpKHc/maxresdefault.jpg)
 ###### since 10.01.2021
 
 ### I recently started trying machines on HackTheBox and I'm going to publicate here my progress.
