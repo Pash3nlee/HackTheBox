@@ -5,7 +5,7 @@
 
 ### Hello my name is Pasha. I am young specialist of information security. I am taking my first steps in this specialty. Recently I started trying to hack machines on HackTheBox. I'm going to publicate here my progress.
 
-[HackTheBox Profile](https://www.hackthebox.eu/home/users/profile/480331)
+[HackTheBox Profile](https://app.hackthebox.eu/profile/overview)
 
 ## Machines
 
