@@ -250,7 +250,7 @@ Serving HTTP on 0.0.0.0 port 8888 (http://0.0.0.0:8888/) ...
 
 Now we should edit our *AwesomeScriptEngineFactory.java* for run script of reverse shell.
 
-Dont'forget remove *AwesomeScriptEngineFactory.class* and *yaml-payload.jar*
+Don't forget remove *AwesomeScriptEngineFactory.class* and *yaml-payload.jar*
 
 ```
 package artsploit;
