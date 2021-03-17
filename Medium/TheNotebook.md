@@ -13,54 +13,96 @@
 
 # Short retelling
 
-* Find RCE for YAML
-* 
+* Decode JWT
+* Spoofing a private certificate
+* Spoofing JWT with admin access
+* Upload PHP Reverse Shell
+* Find users's credentials in backups
+* Get user.txt
+* Using Runc's vulnerability
+* Get root.txt
 
 # Enumeration
 
 ## Nmap
 
-Let's start reconing machine "Ophiuchi" 10.10.10.227 with Nmap
+Let's start reconing machine "TheNotebook" 10.10.10.230 with Nmap
 
 ```
-└─# nmap -sV -sC -p- 10.10.10.227                                                                                                                                    130 ⨯
-Starting Nmap 7.91 ( https://nmap.org ) at 2021-02-23 01:03 EST
-Stats: 0:22:08 elapsed; 0 hosts completed (1 up), 1 undergoing SYN Stealth Scan
-SYN Stealth Scan Timing: About 94.40% done; ETC: 01:26 (0:01:19 remaining)
-Nmap scan report for ophiuchi.htb (10.10.10.227)
-Host is up (0.31s latency).
-Not shown: 65533 closed ports
-PORT     STATE SERVICE VERSION
-22/tcp   open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.1 (Ubuntu Linux; protocol 2.0)
+┌──(root💀kali)-[/home/kali/HTB/TheNotebook]
+└─# nmap -sV -sC -p- 10.10.10.230 
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-03-17 01:23 EDT
+Nmap scan report for thenotebook.htb (10.10.10.230)
+Host is up (0.27s latency).
+Not shown: 65532 closed ports
+PORT      STATE    SERVICE VERSION
+22/tcp    open     ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
 | ssh-hostkey: 
-|   3072 6d:fc:68:e2:da:5e:80:df:bc:d0:45:f5:29:db:04:ee (RSA)
-|   256 7a:c9:83:7e:13:cb:c3:f9:59:1e:53:21:ab:19:76:ab (ECDSA)
-|_  256 17:6b:c3:a8:fc:5d:36:08:a1:40:89:d2:f4:0a:c6:46 (ED25519)
-8080/tcp open  http    Apache Tomcat 9.0.38
-|_http-title: Parse YAML
+|   2048 86:df:10:fd:27:a3:fb:d8:36:a7:ed:90:95:33:f5:bf (RSA)
+|   256 e7:81:d6:6c:df:ce:b7:30:03:91:5c:b5:13:42:06:44 (ECDSA)
+|_  256 c6:06:34:c7:fc:00:c4:62:06:c2:36:0e:ee:5e:bf:6b (ED25519)
+80/tcp    open     http    nginx 1.14.0 (Ubuntu)
+|_http-server-header: nginx/1.14.0 (Ubuntu)
+|_http-title: The Notebook - Your Note Keeper
+10010/tcp filtered rxapi
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-Nmap done: 1 IP address (1 host up) scanned in 1508.80 seconds
+Nmap done: 1 IP address (1 host up) scanned in 655.13 seconds
 ```
-We find 8080/tcp and 22/tcp ports, so lets add *ophiuchi.htb* to /etc/hosts and website http://ophiuchi.htb:8080.
+We find 80/tcp and 22/tcp ports, so lets add *thenotebook.htb* to /etc/hosts and check website.
 
-![Ophiuchi](https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-02-23_130611.png)
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/tn1.PNG)
 
-We see *Online YAML Parser*. 
+We see the web version of notebook. The message says that we need just to register. Let's do it.
 
-When we are clicked on button *parse*, we will get redirect to the another page with information about error. 
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/tn2.PNG)
 
-![Ophiuchi](https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-02-23_131153.png)
+After registeretion we get redirect to our home page.
 
-And I start searching about exploits for *Online YAML Parser*:
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/tn3.PNG)
 
-* https://medium.com/@swapneildash/snakeyaml-deserilization-exploited-b4a2c5ac0858
-* https://github.com/mbechler/marshalsec
-* https://github.com/artsploit/yaml-payload
+Here we can write our notes.
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/tn4.PNG)
+
+CSRF and SSTI are not exploited.
+
+Source code isn't interesting.
+
+## Burp
+
+So let's use Burp to check what data is sent to the web server.
+
+Checking authorization form.
+
+Web-form:
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/tn5.PNG)
+
+The data is increpting by Burp:
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/tn6.PNG)
+
+We see just interesting string in the filed *Cookie*.
+
+Try to decode BASE64:
+
+```
+┌──(root💀kali)-[/home/kali/HTB/TheNotebook]
+└─# echo 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA3MC9wcml2S2V5LmtleSJ9.eyJ1c2VybmFtZSI6InBhc2hhIiwiZW1haWwiOiJwYXNoYUB0aGVub3RlYmJvay5odGIiLCJhZG1pbl9jYXAiOnRydWV9.gkD2C8w7hcUF1QFLiOHhs4w-tfrsu6t7Px6aA4u0ROsnScjHtu0sXUHWM9-5Q1W7pprRv6ORq0YpXqRuDDpnq_uvuXslBGdsVUWbQYM6EHDq5ZBQtV3qKReUmWvK8TReKUKdGFl4KzaMPKL5Dz3z_Nj6Z7JcRap4FMiYXDbCESgERItzGALm8WzVH4kQ_cbXM2T7NHNZStFNFyJK3hQQItpNLE2UxvQ3y1rWOtfWETSrtiyq71_cOMwu9MJPXONyOyzceVGekkZLCxK4Eh1Jy2pQ-1qM3SL6Yqf6H2sshPswjvcJVAKdUjy-slTvyFd80SdXfXvSg9bb_yVWwBfEM0q_pw_96xERuvc_oY0dvOdUz954q5WRhpGisVoknG0jdEiC3wr9FFNOBXTVUVDsgE5BN1tN8M2CC7fgTrb9YOoYCpd8dWq4Zwcc9dnlpYR2DF0IQfLggMwYOcWLf0Ncqw7c5yBGIwe6nQGMrmZDXpwqkJRUvL5QGJ0N4smGJwxEWHcwNqDGk7Xj8sIeQjrq9c7XPIZeATShGmeQYT6SdKnZxGfic9bALsiRCT_BRZ7352LItWpIXLJSIaVoA6lWllgxlO0saW6iLDHiPILf3wkaMPROuQ8y-q7dpcgbob_A6X_PE_VST89uw6fIfeZj_VlfKa0P997IHYReDbIG21c' | base64 -d
+{"typ":"JWT","alg":"RS256","kid":"http://localhost:7070/privKey.key"}base64: invalid input
+```
+
+We get *typ: "JWT"* understang that thiw web server is using jasow web token for authorizaton.
+
+I think that is way to foothold.
 
 # Explotation
 
+Install module for JWT in burp we can read all information.
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/tn7.PNG)
 
 
 # Privilege Escalation#1
