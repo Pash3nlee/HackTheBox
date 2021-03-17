@@ -21,5 +21,5 @@
    >*Linux, SSTI, Splunk Universal Forwarder misconfigurations*
 6. [Passage (Medium)](https://github.com/Pash3nlee/HackTheBox/blob/main/Medium/Passage.md)
    >*Linux, CuteNews, USBCreator D-Bus*
-7. [OPhiuchi (Medium)](https://github.com/Pash3nlee/HackTheBox/blob/main/Medium/Ophiuchi.md)
+7. [Ophiuchi (Medium)](https://github.com/Pash3nlee/HackTheBox/blob/main/Medium/Ophiuchi.md)
    >*Linux, YAML, Java Payload, Wasmer, PATH hijacking*
