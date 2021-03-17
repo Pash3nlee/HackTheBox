@@ -94,7 +94,7 @@ Try to decode BASE64:
 {"typ":"JWT","alg":"RS256","kid":"http://localhost:7070/privKey.key"}base64: invalid input
 ```
 
-We get *typ: "JWT"* understang that thiw web server is using jasow web token for authorizaton.
+We get *typ: "JWT"* and understand that this web server is using jason web token for authorization.
 
 I think that is way to foothold.
 
@@ -103,6 +103,37 @@ I think that is way to foothold.
 Install module for JWT in burp we can read all information.
 
 ![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/tn7.PNG)
+
+We can see interesting fields:
+
+* "kid": "http://localhost:7070/privKey.key"
+* "admin_cap": false
+
+I think we need to change *admin_cap* to *true* and get probably admin access.
+
+But if we simply change "admin_cap": true we will not get access.
+
+Also I try to change "kid": "http://10.10.16.5:8000/" and we get connection from server.
+
+```
+┌──(root💀kali)-[/home/kali/HTB/TheNotebook]
+└─# ip a | grep tun                                                                                         1 ⨯
+5: tun0: <POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UNKNOWN group default qlen 500
+    inet 10.10.16.5/23 scope global tun0
+                                                                                                                
+┌──(root💀kali)-[/home/kali/HTB/TheNotebook]
+└─# python3 -m http.server 8000
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
+10.10.10.230 - - [17/Mar/2021 02:19:39] "GET / HTTP/1.1" 200 -
+```
+
+Interesting...
+
+Google show me arcticles abot JWT:
+
+* https://habr.com/ru/post/450054/
+* https://medium.com/swlh/hacking-json-web-tokens-jwts-9122efe91e4a
+* https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/
 
 
 # Privilege Escalation#1
