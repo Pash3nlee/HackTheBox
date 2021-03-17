@@ -135,6 +135,39 @@ Google show me arcticles abot JWT:
 * https://medium.com/swlh/hacking-json-web-tokens-jwts-9122efe91e4a
 * https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/
 
+Ok. we have token
+
+```
+eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA3MC9wcml2S2V5LmtleSJ9.eyJ1c2VybmFtZSI6InBhc2hhIiwiZW1haWwiOiJwYXNoYUB0aGVub3RlYmJvay5odGIiLCJhZG1pbl9jYXAiOnRydWV9.gkD2C8w7hcUF1QFLiOHhs4w-tfrsu6t7Px6aA4u0ROsnScjHtu0sXUHWM9-5Q1W7pprRv6ORq0YpXqRuDDpnq_uvuXslBGdsVUWbQYM6EHDq5ZBQtV3qKReUmWvK8TReKUKdGFl4KzaMPKL5Dz3z_Nj6Z7JcRap4FMiYXDbCESgERItzGALm8WzVH4kQ_cbXM2T7NHNZStFNFyJK3hQQItpNLE2UxvQ3y1rWOtfWETSrtiyq71_cOMwu9MJPXONyOyzceVGekkZLCxK4Eh1Jy2pQ-1qM3SL6Yqf6H2sshPswjvcJVAKdUjy-slTvyFd80SdXfXvSg9bb_yVWwBfEM0q_pw_96xERuvc_oY0dvOdUz954q5WRhpGisVoknG0jdEiC3wr9FFNOBXTVUVDsgE5BN1tN8M2CC7fgTrb9YOoYCpd8dWq4Zwcc9dnlpYR2DF0IQfLggMwYOcWLf0Ncqw7c5yBGIwe6nQGMrmZDXpwqkJRUvL5QGJ0N4smGJwxEWHcwNqDGk7Xj8sIeQjrq9c7XPIZeATShGmeQYT6SdKnZxGfic9bALsiRCT_BRZ7352LItWpIXLJSIaVoA6lWllgxlO0saW6iLDHiPILf3wkaMPROuQ8y-q7dpcgbob_A6X_PE_VST89uw6fIfeZj_VlfKa0P997IHYReDbIG21c
+```
+
+And it has 3 parts decode in base64: header.payload.signature:
+
+* Header - ALGORITHM & TOKEN TYPE:
+
+```
+──(root💀kali)-[/home/kali/HTB/TheNotebook]
+└─# echo 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA3MC9wcml2S2V5LmtleSJ9' | base64 -d
+{"typ":"JWT","alg":"RS256","kid":"http://localhost:7070/privKey.key"}
+```
+
+* Payload - DATA
+
+```
+┌──(root💀kali)-[/home/kali/HTB/TheNotebook]
+└─# echo 'eyJ1c2VybmFtZSI6InBhc2hhIiwiZW1haWwiOiJwYXNoYUB0aGVub3RlYmJvay5odGIiLCJhZG1pbl9jYXAiOnRydWV9' | base64 -d
+{"username":"pasha","email":"pasha@thenotebbok.htb","admin_cap":true} 
+```
+
+* Verify signature
+
+The signature is calculated by base64url encoding the header and payload and concatenating them with a period as a separator
+
+```
+key = 'privatekey'
+unsignedToken = encodeBase64(header) + '.' + encodeBase64(payload)
+signature = HMAC-SHA256(key, unsignedToken)
+```
 
 # Privilege Escalation#1
 
