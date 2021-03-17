@@ -94,7 +94,7 @@ Try to decode BASE64:
 {"typ":"JWT","alg":"RS256","kid":"http://localhost:7070/privKey.key"}base64: invalid input
 ```
 
-We get *typ: "JWT"* and understand that this web server is using jason web token for authorization.
+We get *typ: "JWT"* and understand that this web server is using JSON Web Token for authorization.
 
 I think that is way to foothold.
 
@@ -168,6 +168,15 @@ key = 'privatekey'
 unsignedToken = encodeBase64(header) + '.' + encodeBase64(payload)
 signature = HMAC-SHA256(key, unsignedToken)
 ```
+We can chande data of headers and payload, but we can't create JWT token without signature. We need in private key for encode signature.
+
+Remember, that we got connection to out host when we idited *kid*.
+
+There is one idea, we can create own private key and public key, and try to upload private key to server with edition in *kid*.
+
+Generate private and public key:
+
+
 
 # Privilege Escalation#1
 
@@ -179,10 +188,6 @@ signature = HMAC-SHA256(key, unsignedToken)
 
 # Result and Resources
 
-1. https://medium.com/@swapneildash/snakeyaml-deserilization-exploited-b4a2c5ac0858
-2. https://github.com/mbechler/marshalsec
-3. https://github.com/artsploit/yaml-payload
-4. https://habr.com/ru/company/ruvds/blog/454518/
-5. https://webassembly.github.io/wabt/demo/wasm2wat/
-6. https://webassembly.github.io/wabt/demo/wat2wasm/
+1. h
+2. h
 
