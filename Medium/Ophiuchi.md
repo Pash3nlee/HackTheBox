@@ -109,7 +109,7 @@ remote: Total 10 (delta 0), reused 0 (delta 0), pack-reused 10
 Unpacking objects: 100% (10/10), 1.34 KiB | 229.00 KiB/s, done.
 ```
 
-Edit *AwesomeScriptEngineFactory.java* for rce *rec=verse shell*
+Edit *AwesomeScriptEngineFactory.java* for rce *reverse shell*
 
 ```
 ┌──(root💀kali)-[~kali/…/Ophiuchi/yaml-payload/src/artsploit]
