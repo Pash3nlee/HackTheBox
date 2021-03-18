@@ -530,6 +530,9 @@ boot   etc   initrd.img.old  lost+found  opt   run   srv   usr  vmlinuz.old
 cdrom  home  lib             media       proc  sbin  sys   var
 ```
 
+We need to find way to privilege escalation, so run [LinPEAS Script](https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/tree/master/linPEAS).
+
+
 
 # Privilege Escalation#2
 
