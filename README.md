@@ -23,3 +23,5 @@
    >*Linux, CuteNews, USBCreator D-Bus*
 7. [Ophiuchi (Medium)](https://github.com/Pash3nlee/HackTheBox/blob/main/Medium/Ophiuchi.md)
    >*Linux, YAML, Java Payload, Wasmer, PATH hijacking*
+8. [TheNotebook (Medium)](https://github.com/Pash3nlee/HackTheBox/blob/main/Medium/TheNotebook.md)
+   >*Linux, JWT, PHP reverse shell, Docker, Runc*
