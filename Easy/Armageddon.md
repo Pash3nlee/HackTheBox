@@ -35,15 +35,15 @@ Ports 80 and 22 are open
 
 Lets check http://armageddon.htb
 
-![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-02-02_223157.png)
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/arm1.PNG)
 
 We can see *User Login* form. Trying to create a new account.
 
-![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-02-02_223157.png)
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/arm2.PNG)
 
 And we get error and can't log in.
 
-![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-02-02_223157.png)
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/arm3.PNG)
 
 Next step we are checking source code of page and find out about CMS *drupal* and ut's version *7*.
 
