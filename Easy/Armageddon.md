@@ -9,7 +9,7 @@
 | Difficulty Rating| Easy   |
 | Release | 27 Mar 2021   |
 | IP | 10.10.10.233   |
-| Owned | 15.04.2021 |
+| Owned | 15 Apr 2021 |
 
 # Short retelling
 * Find vulearable version of CMS
