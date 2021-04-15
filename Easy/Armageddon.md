@@ -297,6 +297,21 @@ $S$DgL2gjv6ZtxBo6CdqZEyJuBphBmrCqIV6W97.oOsUf1xAhaadURt
 Password looks like hash. so let's run [john](https://www.hackingarticles.in/beginner-guide-john-the-ripper-part-1/).
 
 ```
+┌──(root💀kali)-[/home/kali/HTB/armageddon]
+└─# cat pass.hash                                                                
+$S$DgL2gjv6ZtxBo6CdqZEyJuBphBmrCqIV6W97.oOsUf1xAhaadURt
+                                                                                                                                                                           
+┌──(root💀kali)-[/home/kali/HTB/armageddon]
+└─# john --wordlist=/usr/share/wordlists/rockyou.txt pass.hash 
+Using default input encoding: UTF-8
+Loaded 1 password hash (Drupal7, $S$ [SHA512 128/128 AVX 2x])
+Cost 1 (iteration count) is 32768 for all loaded hashes
+Will run 4 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+booboo           (?)
+1g 0:00:00:00 DONE (2021-04-15 11:08) 1.063g/s 246.8p/s 246.8c/s 246.8C/s tiffany..harley
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed
 
 ```
 
