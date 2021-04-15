@@ -45,7 +45,7 @@ And we get error and can't log in.
 
 ![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/arm3.PNG)
 
-Next step we are checking source code of page and find out about CMS *drupal* and ut's version *7*.
+Next step we are checking source code of page and find out about CMS *drupal* and it's version *7*.
 
 Searching some exploits for this version and find:
 
