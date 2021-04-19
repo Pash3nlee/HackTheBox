@@ -25,5 +25,5 @@
    >*Linux, YAML, Java Payload, Wasmer, PATH hijacking*
 8. [TheNotebook (Medium)](https://github.com/Pash3nlee/HackTheBox/blob/main/Medium/TheNotebook.md)
    >*Linux, JWT, PHP reverse shell, Docker, Runc*
-5. [Armageddon (Easy)](https://github.com/Pash3nlee/HackTheBox/blob/main/Easy/Armageddon.md)
+9. [Armageddon (Easy)](https://github.com/Pash3nlee/HackTheBox/blob/main/Easy/Armageddon.md)
    >*Linux, Drupal, PHP Web Shell, MySQL, snapd, Dirty-Sock*
