@@ -47,6 +47,8 @@ And we get error and can't log in.
 
 Next step we are checking source code of page and find out about CMS *drupal* and it's version *7*.
 
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/arm4.PNG)
+
 Searching some exploits for this version and find:
 
 * https://medium.com/@briskinfosec/drupal-core-remote-code-execution-vulnerability-cve-2019-6340-35dee6175afa
