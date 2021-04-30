@@ -148,7 +148,7 @@ http://Schooled.htb/js (Status: 301)
 
 And we get no result.
 
-##ffuf
+## ffuf
 
 Let's try to find subdomains of web server.
 
