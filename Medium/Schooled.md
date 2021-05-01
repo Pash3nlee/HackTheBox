@@ -630,6 +630,18 @@ require_once(__DIR__ . '/lib/setup.php');
 // it is intentional because it prevents trailing whitespace problems!
 ```
 
+Let's connect to mysql
+
+```
+$ mysql -u moodle -pPlaybookMaster2020 -e'show databases'
+/bin/sh: mysql: not found
+$ which mysql
+$ whereis mysql
+mysql: /usr/local/man/man1/mysql.1.gz
+$ locate mysql
+/usr/local/bin/mysql
+```
+
 # Privilege Escalation#2
 
 
