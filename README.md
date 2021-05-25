@@ -27,9 +27,7 @@
    >*Linux, JWT, PHP reverse shell, Docker, Runc*
 9. [Armageddon (Easy)](https://github.com/Pash3nlee/HackTheBox/blob/main/Easy/Armageddon.md)
    >*Linux, Drupal, PHP Web Shell, MySQL, snapd, Dirty-Sock*
-9. [Armageddon (Easy)](https://github.com/Pash3nlee/HackTheBox/blob/main/Easy/Armageddon.md)
-   >*Linux, Drupal, PHP Web Shell, MySQL, snapd, Dirty-Sock*
-11. [Schooled (Medium)](https://github.com/Pash3nlee/HackTheBox/blob/main/Medium/Schooled.md)
+9. [Schooled (Medium)](https://github.com/Pash3nlee/HackTheBox/blob/main/Medium/Schooled.md)
    >*FreeBSD, XSS, Priv Esc, PHP Reverse Shell, MySQL, specially crafted FreeBSD package*
  
 
