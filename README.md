@@ -30,3 +30,4 @@
 10. [Schooled (Medium)](https://github.com/Pash3nlee/HackTheBox/blob/main/Medium/Schooled.md)
    >*FreeBSD, XSS, Priv Esc, PHP Reverse Shell, MySQL, specially crafted FreeBSD package*
 
+
