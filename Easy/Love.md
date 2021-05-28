@@ -153,13 +153,13 @@ Let's check every htttp service
 
 And we see login form of *Voting System*
 
-![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/l1.jpg)
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/l1.PNG)
 
 * http://love.htb:5000/
 
 Error 403. We don't have permission to access.
 
-![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/l2.jpg)
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/l2.PNG)
 
 Request to another http services returns 404 error.
 
@@ -208,7 +208,7 @@ plugins                 [Status: 301, Size: 331, Words: 22, Lines: 10]
 
 And we find *Admin page*
 
-![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/l3.jpg)
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/l3.PNG)
 
 But we don't have creds to access..
 
@@ -300,7 +300,7 @@ staging                 [Status: 200, Size: 5357, Words: 1543, Lines: 192]
 
 And we get new web-page *http://staging.love.htb/*
 
-![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/l4.jpg)
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/l4.PNG)
 
 
 # Explotation
