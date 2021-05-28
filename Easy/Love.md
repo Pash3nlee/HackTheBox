@@ -12,14 +12,13 @@
 | Owned | 27 May 2021 |
 
 # Short retelling
-* Find vulearable version of CMS
-* Using exploit and get php web shell
-* Enumeration and find credentionals
-* Connect to mysql database and find hash
+
+* Enumeration and find subdomain
+* Using SSRF to get more information
+* Using exploit for VotingSystem
 * Get user.txt
-* Find exploit for snapd
-* Create and install trojan snap
-* Login with creds of new user
+* Exploit vuln in Group Policy
+* Install maliciously crafted software
 * Get root.txt
 
 # Enumeration
