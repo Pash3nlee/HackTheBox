@@ -296,8 +296,7 @@ ________________________________________________
 ________________________________________________
 
 staging                 [Status: 200, Size: 5357, Words: 1543, Lines: 192]
-[WARN] Caught keyboard interrupt (Ctrl-C)
-
+:: Progress: [114441/114441] :: Job [1/1] :: 75 req/sec :: Duration: [0:22:58] :: Errors: 0 ::
 ```
 
 And we get new web-page *http://staging.love.htb/*
