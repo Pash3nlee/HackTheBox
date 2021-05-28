@@ -263,6 +263,8 @@ And let's check anonymous logon in smb
 session setup failed: NT_STATUS_ACCESS_DENIED
 ```
 
+!t's doesn't work.
+
 ## ffuf
 
 Ok, also we could try to find a subdomain with ffuf
