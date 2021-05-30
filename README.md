@@ -29,6 +29,8 @@
    >*Linux, Drupal, PHP Web Shell, MySQL, snapd, Dirty-Sock*
 9. [Schooled (Medium)](https://github.com/Pash3nlee/HackTheBox/blob/main/Medium/Schooled.md)
    >*FreeBSD, XSS, Priv Esc, PHP Reverse Shell, MySQL, specially crafted FreeBSD package*
+9. [Love (Easy)](https://github.com/Pash3nlee/HackTheBox/blob/main/Easy/Love.md)
+   >*Windows, PHP Voiting System, SSRF, File Upload RCE, AlwaysInstallElevated*
  
 
 
