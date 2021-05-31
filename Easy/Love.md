@@ -580,7 +580,6 @@ It means, that if these 2 registers are enabled (value is 0x1), then users of an
 * https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#alwaysinstallelevated
 * https://github.com/RackunSec/Penetration-Testing-Grimoire/blob/master/Privilege%20Escalation/Windows/always-install-elevated.md
 * https://dmcxblue.gitbook.io/red-team-notes/privesc/unquoted-service-path
-* 
 
 We can create payload with msfvenom
 
@@ -756,6 +755,8 @@ c7d28291043b3a8af835c2e5b7cfdb34
 
 # Resources
 
-1. https://shenaniganslabs.io/2019/02/13/Dirty-Sock.html
-2. 
+1. https://portswigger.net/web-security/ssrf
+2. https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#alwaysinstallelevated
+3. https://github.com/RackunSec/Penetration-Testing-Grimoire/blob/master/Privilege%20Escalation/Windows/always-install-elevated.md
+4. https://dmcxblue.gitbook.io/red-team-notes/privesc/unquoted-service-path
 
