@@ -261,8 +261,13 @@ And let's check anonymous logon in smb
 ┌──(root💀kali)-[/home/kali/HTB/Love]
 └─# smbclient -L \\love.htb -U guest -N
 session setup failed: NT_STATUS_LOGON_FAILURE
-```
 
+┌──(root💀kali)-[/home/kali/HTB/Love]
+└─# smbclient -L \\love.htb                                                                                                                                                                                                            1 ⨯
+Enter WORKGROUP\root's password: 
+session setup failed: NT_STATUS_ACCESS_DENIED
+
+```
 !t's doesn't work.
 
 ## ffuf
