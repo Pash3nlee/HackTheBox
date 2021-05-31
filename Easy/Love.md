@@ -259,10 +259,8 @@ And let's check anonymous logon in smb
 
 ```
 ┌──(root💀kali)-[/home/kali/HTB/Love]
-└─# smbclient -L love.htb -U guest                                                                                                                                                                                                   1 ⨯
-Enter WORKGROUP\guest's password: 
-session setup failed: NT_STATUS_ACCOUNT_DISABLED
-
+└─# smbclient -L \\love.htb -U guest -N
+session setup failed: NT_STATUS_LOGON_FAILURE
 ```
 
 !t's doesn't work.
