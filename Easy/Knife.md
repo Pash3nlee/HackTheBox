@@ -12,8 +12,11 @@
 | Owned | 31 May 2021 |
 
 # Short retelling
-* Find vulearable version of CMS
-* 
+
+* Find vulearable service
+* Get user.txt
+* Exec shell with using bin knife
+* Get root.txt
 
 # Enumeration
 
@@ -1145,7 +1148,9 @@ knife yaml convert YAML_FILENAME [RUBY_FILENAME]
 
 Ok, we have manual how to use it. Also I find manual [here](https://docs.chef.io/workstation/knife/)
 
-There is commabd [*exec*](https://docs.chef.io/workstation/knife_exec/), which allow to run any ruby scripts.
+There is command [*exec*](https://docs.chef.io/workstation/knife_exec/), which allow to run any ruby scripts.
+
+```knife exec -E 'RUBY CODE' or knife exec /path/to/script_file```
 
 Let's create exec [ruby](https://gtfobins.github.io/gtfobins/ruby/) script to get shell
 
@@ -1172,4 +1177,6 @@ cat /root/root.txt
 
 # Resources
 
-1. 
+1. https://flast101.github.io/php-8.1.0-dev-backdoor-rce/
+2. https://github.com/flast101/php-8.1.0-dev-backdoor-rce
+3. https://docs.chef.io/workstation/knife/
