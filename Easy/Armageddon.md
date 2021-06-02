@@ -1,6 +1,6 @@
 # Introduction
 
-[![Armageddon](https://www.hackthebox.eu/storage/avatars/4256f259c8ac66a3eda11206371eaf8b.png)](https://app.hackthebox.eu/machines/323)
+[![Armageddon](https://www.hackthebox.eu/storage/avatars/110fe6608793064cf171080150ebd0dc.png)](https://app.hackthebox.eu/machines/323)
 
 | Point | Description |
 | :------:| :------: |
