@@ -31,6 +31,8 @@
    >*FreeBSD, XSS, Priv Esc, PHP Reverse Shell, MySQL, specially crafted FreeBSD package*
 9. [Love (Easy)](https://github.com/Pash3nlee/HackTheBox/blob/main/Easy/Love.md)
    >*Windows, PHP Voiting System, SSRF, File Upload RCE, AlwaysInstallElevated*
+9. [Knife (Easy)](https://github.com/Pash3nlee/HackTheBox/blob/main/Easy/Knife.md)
+   >*Linux, Php Backdoor, Chef Maintained Knife, Ruby shell*
  
 
 
