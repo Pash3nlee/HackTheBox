@@ -33,6 +33,7 @@
    >*Windows, PHP Voiting System, SSRF, File Upload RCE, AlwaysInstallElevated*
 9. [Knife (Easy)](https://github.com/Pash3nlee/HackTheBox/blob/main/Easy/Knife.md)
    >*Linux, Php Backdoor, Chef Maintained Knife, Ruby shell*
- 
+9. [Cap (Easy)](https://github.com/Pash3nlee/HackTheBox/blob/main/Easy/Cap.md)
+   >*Linux, Wireshark, Capabilities*
 
 
