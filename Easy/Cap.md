@@ -13,8 +13,9 @@
 
 # Short retelling
 
-* Find vulearable service
-* 
+* Analyze pcap files with wireshark
+* Find credentials in ftp's authorization
+* Use capabilities of python to get root's shell
 
 # Enumeration
 
