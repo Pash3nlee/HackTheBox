@@ -35,5 +35,7 @@
    >*Linux, Php Backdoor, Chef Maintained Knife, Ruby shell*
 9. [Cap (Easy)](https://github.com/Pash3nlee/HackTheBox/blob/main/Easy/Cap.md)
    >*Linux, Wireshark, Capabilities*
+9. [Previse (Easy)](https://github.com/Pash3nlee/HackTheBox/blob/main/Easy/Previse.md)
+   >*Linux, PHP, OS Injection, MySQL, PATH hijacking**
 
 
