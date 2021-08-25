@@ -517,7 +517,7 @@ We can only read it. And it's easy. We need to use PATH hijacking to Privilege e
 
 1. Create gzip in home or tmp folder
 2. Write reverse shell there
-3. Export new to PATH
+3. Export new directory to PATH
 4. Run it
 
 ```
