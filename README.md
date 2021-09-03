@@ -37,5 +37,6 @@
    >*Linux, Wireshark, Capabilities*
 9. [Previse (Easy)](https://github.com/Pash3nlee/HackTheBox/blob/main/Easy/Previse.md)
    >*Linux, PHP, Bypass Login, OS Injection, MySQL, PATH hijacking*
-
+9. [Horizontall (Easy)](https://github.com/Pash3nlee/HackTheBox/blob/main/Easy/Horizontall.md)
+   >*Linux, Strapi, Blind RCE, Local Port Forwarding, Laravel*
 
