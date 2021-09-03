@@ -13,8 +13,9 @@
 
 # Short retelling
 
-* Enumeration and find directories
-* 
+* Enumeration and find subdomain and directories
+* Use blind rce in Strapi
+* Use ssh port forwarding to exploit RCE in Laravel
 
 # Enumeration
 
